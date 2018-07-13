@@ -10,9 +10,7 @@ const siteSchema = new mongoose.Schema(
     description: {
       type: String
     },
-    _paragraphs: {
-      type: [Schema.Types.ObjectId]
-    }
+    _paragraphs: [{ type: Schema.Types.ObjectId, ref: "Paragraph" }]
   },
   { timestamps: { createdAt: "created_at", updatedAt: "updatedAt" } }
 );
