@@ -1,6 +1,7 @@
 var express = require("express");
 const Notebook = require("../models/Notebook");
 const Site = require("../models/Site");
+const Paragraph = require("../models/Paragraph");
 const passport = require("passport");
 const config = require("../config");
 const accessQueries = require("../accessQueries");
@@ -74,4 +75,23 @@ router.post("/", passport.authenticate("jwt", config.jwtSession), (req, res, nex
 });
 //#endregion
 
+// SITES
+
+//#region GET get Notebooks/sites/:siteId
+router.get("/sites/:siteId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+  accessQueries
+    .findOneNotebookWithAccessThroughSiteId(req.params.siteId, req.user._id)
+    .then(notebook => {
+      if (!notebook) next("ERROR no rights or no site");
+      else
+        Site.findById(req.params.siteId)
+          .populate("_paragraphs")
+          .then(site => {
+            if (!site) next("ERROR no site");
+            else res.json(site);
+          });
+    })
+    .catch(err => next(err));
+});
+//#endregion
 module.exports = router;
