@@ -1,19 +1,20 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const siteSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    default: Date.now()
+const siteSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      default: Date.now()
+    },
+    description: {
+      type: String
+    },
+    _paragraphs: {
+      type: [Schema.Types.ObjectId]
+    }
   },
-  description: {
-    type: String
-  },
-  _paragraphs: {
-    type: [Schema.Types.ObjectId]
-  },
-  _owner: { type: Schema.Types.ObjectId, ref: "User" },
-  _collaborators: [{ type: Schema.Types.ObjectId, ref: "Uer" }]
-});
+  { timestamps: { createdAt: "created_at", updatedAt: "updatedAt" } }
+);
 
 module.exports = mongoose.model("Site", siteSchema);

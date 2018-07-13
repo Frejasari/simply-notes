@@ -15,26 +15,34 @@ const users = [
     email: "anna.testuser@abc.de",
     password: "abcd",
     imgUrl: "/images/default-silhouette.jpg",
-    _categories: []
+    notebooks: []
   },
   {
     name: "Lisa",
     email: "lisa.testuser@abc.de",
     password: "abcd",
-    imgUrl: "/images/default-silhouette.jpg"
+    imgUrl: "/images/default-silhouette.jpg",
+    notebooks: []
   },
   {
     name: "Meg",
     email: "meg.testuser@abc.de",
     password: "abcd",
-    imgUrl: "/images/default-silhouette.jpg"
+    imgUrl: "/images/default-silhouette.jpg",
+    notebooks: []
   }
 ];
 //#endregion
 
 //#region Notebooks
 const notebooks = [
-  { title: "Ironhack", description: "Notebook about my Ironhack Coding Bootcamp experience", _sites: [] }
+  {
+    title: "Ironhack",
+    description: "Notebook about my Ironhack Coding Bootcamp experience",
+    _sites: [],
+    _owner: null,
+    _collaborators: []
+  }
 ];
 //#endregion
 
@@ -86,16 +94,19 @@ const paragraphs = [
 
 //#region  Categories
 let categories = [
-  { name: "Express" },
-  { name: "Hbs" },
-  { name: "Node.js" },
-  { name: "Terminal" },
-  { name: "Mongoose" },
-  { name: "The Internet" }
+  { name: "Express", _owner: null },
+  { name: "Hbs", _owner: null },
+  { name: "Node.js", _owner: null },
+  { name: "Terminal", _owner: null },
+  { name: "Mongoose", _owner: null },
+  { name: "The Internet", _owner: null }
 ];
 //#endregion
 
 //#region seed everything
+let firstUserId;
+let secondUserId;
+
 Promise.all([
   User.deleteMany(),
   Notebook.deleteMany(),
@@ -103,19 +114,7 @@ Promise.all([
   Paragraph.deleteMany(),
   Category.deleteMany()
 ])
-  .then(_ => Category.create(categories))
-  .then(categories => {
-    console.log("Categories seeded!");
-    categories.forEach((categorie, j) => {
-      users[0]._categories.push(categorie._id);
-      paragraphs.forEach((paragraph, i) => {
-        if (j === 0 && i !== 1) paragraph._categories.push(categorie._id);
-        if (i % 3 && j === 3 && i !== 1) paragraph._categories.push(categorie._id);
-        else if (i % 2 && j % 2) paragraph._categories.push(categorie._id);
-      });
-    });
-    console.log("Categories added to paragraphs");
-  })
+
   .then(_ => {
     const userPromises = [];
     users.forEach(user => {
@@ -127,12 +126,27 @@ Promise.all([
   })
   .then(users => {
     console.log("Users seeded");
-    let dBUserId1 = users[0]._id;
-    notebooks.forEach(notebook => (notebook._owner = dBUserId1));
-    sites.forEach(site => (site._owner = dBUserId1));
-    paragraphs.forEach(paragraph => (paragraph._owner = dBUserId1));
-    return Paragraph.create(paragraphs);
+    firstUserId = users[0]._id;
+    secondUserId = users[1]._id;
+    categories.forEach(category => (category._owner = firstUserId));
+    notebooks.forEach(
+      notebook => ((notebook._owner = firstUserId), notebook._collaborators.push(firstUserId, secondUserId))
+    );
+    console.log("UserIds added to categories and notebooks");
+    return Category.create(categories);
   })
+  .then(categories => {
+    console.log("Categories seeded!");
+    categories.forEach((categorie, j) => {
+      paragraphs.forEach((paragraph, i) => {
+        if (j === 0 && i !== 1) paragraph._categories.push(categorie._id);
+        if (i % 3 && j === 3 && i !== 1) paragraph._categories.push(categorie._id);
+        else if (i % 2 && j % 2) paragraph._categories.push(categorie._id);
+      });
+    });
+    console.log("Categories added to paragraphs");
+  })
+  .then(_ => Paragraph.create(paragraphs))
   .then(paragraphs => {
     console.log("Paragraphs seeded");
     for (let i = 0; i < paragraphs.length; i += 3) {
@@ -140,6 +154,7 @@ Promise.all([
       if (paragraphs[i + 1]) sites[1]._paragraphs.push(paragraphs[i + 1]);
       if (paragraphs[i + 2]) sites[2]._paragraphs.push(paragraphs[i + 2]);
     }
+    console.log("Paragraph Ids added to sites");
   })
   .then(_ => Site.create(sites))
   .then(dBSites => {
@@ -149,9 +164,20 @@ Promise.all([
     });
     console.log("Site Ids added to notebook");
   })
-  .then(_ => Notebook.create(notebooks).then(notebooks => {}))
+  .then(_ => Notebook.create(notebooks))
+  .then(notebooks => {
+    console.log("Notebooks seeded!");
+    const userPromises = [];
+    notebooks.forEach(notebook => {
+      notebook._collaborators.forEach(collaboratorId => {
+        userPromises.push(User.findByIdAndUpdate(collaboratorId, { $push: { _notebooks: notebook._id } }));
+      });
+    });
+    console.log("Notebooks Ids added to collaborators!");
+    return Promise.all(userPromises);
+  })
   .then(_ => {
-    console.log("Notebooks seeded");
+    console.log("Collaborators updated!!");
     return mongoose.connection.close();
   })
   .then(_ => {
