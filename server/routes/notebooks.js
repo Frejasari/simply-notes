@@ -3,6 +3,7 @@ const Notebook = require("../models/Notebook");
 const Site = require("../models/Site");
 const passport = require("passport");
 const config = require("../config");
+const accessQueries = require("../accessQueries");
 
 var router = express.Router();
 
@@ -19,7 +20,8 @@ router.get("/", passport.authenticate("jwt", config.jwtSession), (req, res, next
 
 // Route to get a specific notebook
 router.get("/:notebookId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
-  Notebook.findOne({ $and: [{ _id: req.params.notebookId }, { _collaborators: req.user._id }] })
+  accessQueries
+    .findOneNotebookWithAccessThroughId(req.params.notebookId, req.user._id)
     .populate("_sites")
     .then(notebook => {
       if (notebook) {
