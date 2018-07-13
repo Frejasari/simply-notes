@@ -36,6 +36,28 @@ router.get("/error", (req, res, next) => {
 });
 //#endregion
 
+//#region PUT Notebooks/NotebookId
+router.put("/:notebookId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+  const { title, description } = req.body;
+  accessQueries
+    .findOneNotebookWithAccessThroughIdAndUpdate(req.params.notebookId, req.user._id, { title, description })
+    .then(notebook => {
+      if (!notebook)
+        res.json("ERROR, notebook could not be updated, either you're not authorized or there's no such notebook");
+      else
+        res.json({
+          success: true,
+          notebook
+        });
+    })
+    .catch(err => next(err));
+});
+
+router.get("/error", (req, res, next) => {
+  res.json(error);
+});
+//#endregion
+
 //#region POST Notebooks
 router.post("/", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
   const { title, description } = req.body;
