@@ -26,9 +26,7 @@ router.get("/:notebookId", passport.authenticate("jwt", config.jwtSession), (req
     .then(notebook => {
       if (notebook) {
         res.json(notebook);
-      } else res.json("ERROR");
-      // TODO REDIRECT TO SOME PAGE!!!
-      // res.redirect("/error");
+      } else res.json("ERROR, there's no notebook with this id");
     })
     .catch(err => next(err));
 });
@@ -41,13 +39,14 @@ router.get("/error", (req, res, next) => {
 //#region POST Notebooks
 router.post("/", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
   const { title, description } = req.body;
-  const userId = req.user._id;
-  Notebook.create({ title, description, _owner: userId, _collaborators: [userId] })
+  Notebook.create({ title, description, _owner: req.user._id, _collaborators: [req.user._id] })
     .then(notebook => {
-      res.json({
-        success: true,
-        notebook
-      });
+      if (!notebook) res.json("ERROR, notebook could not be updated");
+      else
+        res.json({
+          success: true,
+          notebook
+        });
     })
     .catch(err => next(err));
 });
