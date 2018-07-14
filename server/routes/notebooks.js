@@ -94,4 +94,34 @@ router.get("/sites/:siteId", passport.authenticate("jwt", config.jwtSession), (r
     .catch(err => next(err));
 });
 //#endregion
+
+//#region POST Notebooks/:notebookId/sites/
+router.post("/:notebookId/sites", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+  accessQueries
+    .findOneNotebookWithAccessThroughId(req.params.notebookId, req.user._id)
+    .then(notebook => {
+      if (!notebook) next("ERROR, no rights or no notebook");
+      else {
+        const { name, description } = req.body;
+        Site.create({ name, description })
+          .then(site => {
+            if (!site) next("Error, page could not be created");
+            else {
+              res.json(site);
+              notebook._sites.push(site._id);
+              return notebook.save();
+            }
+          })
+          .then(notebook => {
+            if (!notebook) next("Error, notebook could not be updated");
+            // TODO: now?
+            else console.log("Notebook updated and saved!");
+          })
+          .catch(err => next(err));
+      }
+    })
+    .catch(err => next(err));
+});
+//#endregion
+
 module.exports = router;
