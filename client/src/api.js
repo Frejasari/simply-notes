@@ -97,6 +97,37 @@ export default {
   },
   //#endregion
 
+  //#region categories
+  getCategories() {
+    return service
+      .get("/categories")
+      .then(res => res.data)
+      .catch(errHandler);
+  },
+
+  createCategory(data) {
+    return service
+      .post("/categories", data)
+      .then(res => res.data)
+      .catch(errHandler);
+  },
+
+  editCategory(categoryId, data) {
+    return service
+      .put(`/categories/${categoryId}`, data)
+      .then(res => res.data)
+      .catch(errHandler);
+  },
+
+  deleteCategory(categoryId) {
+    return service
+      .delete(`/categories/${categoryId}`)
+      .then(res => res.data)
+      .catch(errHandler);
+  },
+
+  //#endregion
+
   getSecret() {
     return service
       .get("/secret")
