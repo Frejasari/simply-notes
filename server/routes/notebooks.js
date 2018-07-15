@@ -179,4 +179,36 @@ router.delete("/sites/:pageId", passport.authenticate("jwt", config.jwtSession),
     .catch(err => next(err));
 });
 //#endregion
+
+// PARAGRAPHS
+
+//#region POST PARAGRAPH Notebooks/:pageId/paragraphs
+router.post("/:pageId/paragraphs", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+  accessQueries
+    .findOneNotebookWithAccessThroughSiteId(req.params.pageId, req.user._id)
+    .then(notebook => {
+      if (!notebook) next("Error, no access to page or wrong id");
+      else {
+        const text = req.body.text;
+        const _categories = req.body._categories || [];
+        return Paragraph.create({ text, _categories });
+      }
+    })
+    .then(paragraph => {
+      if (!paragraph) next("Error, paragraph could not be created");
+      else
+        return Site.findByIdAndUpdate(
+          req.params.pageId,
+          { $push: { _paragraphs: paragraph._id } },
+          { new: true }
+        ).populate("_paragraphs");
+    })
+    .then(page => {
+      if (!page) next("Error, page could not be updated");
+      else res.json(page);
+    })
+    .catch(err => next(err));
+});
+//#endregion
+
 module.exports = router;
