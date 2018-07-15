@@ -73,6 +73,30 @@ export default {
   },
   //#endregion
 
+  //#region Paragraphs
+
+  createParagraph(pageId, data) {
+    return service
+      .post(`/notebooks/${pageId}/paragraphs`, data)
+      .then(res => res.data)
+      .catch(errHandler);
+  },
+
+  editParagraph(pageId, paragraphId, data) {
+    return service
+      .put(`/notebooks/${pageId}/paragraphs/${paragraphId}`, data)
+      .then(res => res.data)
+      .catch(errHandler);
+  },
+
+  deleteParagraph(pageId, paragraphId) {
+    return service
+      .delete(`/notebooks/${pageId}/paragraphs/${paragraphId}`)
+      .then(res => res.data)
+      .catch(errHandler);
+  },
+  //#endregion
+
   getSecret() {
     return service
       .get("/secret")
