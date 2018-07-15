@@ -156,4 +156,27 @@ router.put("/sites/:siteId", passport.authenticate("jwt", config.jwtSession), (r
 });
 //#endregion
 
+//#region DELETE Notebooks/sites/:siteId
+router.delete("/sites/:pageId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+  accessQueries
+    .findOneNotebookWithAccessThroughSiteId(req.params.pageId, req.user._id)
+    .populate("_sites")
+    .then(notebook => {
+      if (!notebook) next("Error, no rights or no site");
+      else {
+        const promises = [Site.findByIdAndRemove(req.params.pageId)];
+        const pages = notebook._sites;
+        const index = pages.indexOf(req.params.pageId);
+        pages.splice(index, 1);
+        promises.push(notebook.save());
+        return Promise.all(promises);
+      }
+    })
+    .then(([_, notebook]) => {
+      if (!notebook) next("Error, page could not be deleted");
+      else res.json(notebook);
+    })
+    .catch(err => next(err));
+});
+//#endregion
 module.exports = router;
