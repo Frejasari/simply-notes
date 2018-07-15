@@ -202,6 +202,7 @@ router.post("/:pageId/paragraphs", passport.authenticate("jwt", config.jwtSessio
           { $push: { _paragraphs: { $each: [paragraph._id], $position: req.body.position } } },
           { new: true }
         ).populate("_paragraphs");
+      }
     })
     .then(page => {
       if (!page) next("Error, page could not be updated");
@@ -234,4 +235,33 @@ router.put("/:pageId/paragraphs/:paragraphId", passport.authenticate("jwt", conf
 });
 //#endregion
 
+//#region DELETE PARAGRAPH Notebooks/:pageId/paragraphs/:paragraphId
+router.delete("/:pageId/paragraphs/:paragraphId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+  accessQueries
+    .findOneNotebookWithAccessThroughSiteId(req.params.pageId, req.user._id)
+    .then(notebook => {
+      if (!notebook) next("Error, no access to page or wrong id");
+      else {
+        const { text, _categories } = req.body;
+        return Paragraph.findByIdAndRemove(req.params.paragraphId);
+      }
+    })
+    .then(paragraph => {
+      if (!paragraph) next("Error, paragraph could not be deleted");
+      else
+        return Site.findByIdAndUpdate(
+          req.params.pageId,
+          { $pull: { _paragraphs: paragraph._id } },
+          { new: true }
+        ).populate("_paragraphs");
+    })
+    .then(page => {
+      if (!page) next("Error, page could not be updated");
+      else res.json(page);
+    })
+    .catch(err => next(err));
+});
+//#endregion
+
+//
 module.exports = router;
