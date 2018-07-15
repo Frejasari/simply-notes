@@ -17,4 +17,24 @@ router.get("/", passport.authenticate("jwt", config.jwtSession), (req, res, next
 });
 //#endregion
 
+//#region POST categories
+router.post("/", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+  Category.create({ _owner: req.user._id, name: req.body.name })
+    .then(category => {
+      if (!category) next("Error, category could not be created");
+      else getAndShowCategoriesOfUser(req.user._id, res);
+    })
+    .catch(err => next(err));
+});
+//#endregion
+
+const getAndShowCategoriesOfUser = (userId, res) => {
+  return Category.find({ _owner: userId })
+    .select("name")
+    .then(categories => {
+      if (!categories) next("Error, categories not found");
+      else res.json(categories);
+    });
+};
+
 module.exports = router;
