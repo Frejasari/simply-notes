@@ -135,6 +135,7 @@ export default {
       .catch(errHandler);
   },
 
+  //#region Authentication & Authorization
   signup(userInfo) {
     return service
       .post("/signup", userInfo)
@@ -177,4 +178,5 @@ export default {
   isLoggedIn() {
     return localStorage.getItem("user") != null;
   }
+  //#endregion
 };
