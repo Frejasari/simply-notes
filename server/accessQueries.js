@@ -12,5 +12,8 @@ module.exports = {
     Notebook.findOne({ $and: [{ _sites: siteId }, { _collaborators: userId }] }),
 
   findOneCategoryWithAccessAndUpdate: (categoryId, userId, updatedCategory) =>
-    Category.findOneAndUpdate({ $and: [{ _id: categoryId, _owner: userId }] }, updatedCategory, { new: true })
+    Category.findOneAndUpdate({ $and: [{ _id: categoryId, _owner: userId }] }, updatedCategory, { new: true }),
+
+  findOneCategoryWithAccessAndDelete: (categoryId, userId) =>
+    Category.findOneAndRemove({ $and: [{ _id: categoryId, _owner: userId }] })
 };
