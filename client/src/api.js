@@ -43,6 +43,36 @@ export default {
   },
   //#endregion
 
+  //#region Pages
+  getPage(pageId) {
+    return service
+      .get(`/notebooks/sites/${pageId}`)
+      .then(res => res.data)
+      .catch(errHandler);
+  },
+
+  createPage(notebookId, data) {
+    return service
+      .post(`/notebooks/${notebookId}/sites`, data)
+      .then(res => res.data)
+      .catch(errHandler);
+  },
+
+  editPage(pageId, data) {
+    return service
+      .put(`/notebooks/sites/${pageId}`, data)
+      .then(res => res.data)
+      .catch(errHandler);
+  },
+
+  deletePage(pageId) {
+    return service
+      .delete(`/notebooks/sites/${pageId}`)
+      .then(res => res.data)
+      .catch(errHandler);
+  },
+  //#endregion
+
   getSecret() {
     return service
       .get("/secret")
