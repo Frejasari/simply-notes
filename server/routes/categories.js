@@ -34,7 +34,7 @@ router.put("/:categoryId", passport.authenticate("jwt", config.jwtSession), (req
     .findOneCategoryWithAccessAndUpdate(req.params.categoryId, req.user._id, { name: req.body.name })
     .then(category => {
       if (!category) next("Error, category could not be updated, no access or category does not exist");
-      else return res.json(category);
+      else return getAndShowCategoriesOfUser(req.user._id, res);
     })
     .catch(err => next(err));
 });
