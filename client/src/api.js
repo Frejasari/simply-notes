@@ -13,6 +13,7 @@ const errHandler = err => {
 export default {
   service: service,
 
+  //#region notebooks
   getNotebooks() {
     return service
       .get("/notebooks")
@@ -22,24 +23,25 @@ export default {
 
   getNotebook(notebookId) {
     return service
-      .get("/notebooks/" + notebookId)
+      .get(`/notebooks/${notebookId}`)
       .then(res => res.data)
       .catch(errHandler);
   },
 
   editNotebook(notebookId, data) {
     return service
-      .put("notebooks/" + notebookId, data)
+      .put(`/notebooks/${notebookId}`, data)
       .then(res => res.data)
       .catch(errHandler);
   },
 
-  postNotebooks(data) {
+  createNotebooks(data) {
     return service
       .post("/notebooks", data)
       .then(res => res.data)
       .catch(errHandler);
   },
+  //#endregion
 
   getSecret() {
     return service
