@@ -196,10 +196,10 @@ router.post("/:pageId/paragraphs", passport.authenticate("jwt", config.jwtSessio
     })
     .then(paragraph => {
       if (!paragraph) next("Error, paragraph could not be created");
-      else
+      else {
         return Site.findByIdAndUpdate(
           req.params.pageId,
-          { $push: { _paragraphs: paragraph._id } },
+          { $push: { _paragraphs: { $each: [paragraph._id], $position: req.body.position } } },
           { new: true }
         ).populate("_paragraphs");
     })
