@@ -203,7 +203,7 @@ router.post("/:pageId/paragraphs", passport.authenticate("jwt", config.jwtSessio
           req.params.pageId,
           { $push: { _paragraphs: { $each: [paragraph._id], $position: req.body.position } } },
           { new: true }
-        ).populate("_paragraphs");
+        ).populate({ path: "_paragraphs", populate: { path: "_categories", match: { _owner: req.user._id } } });
       }
     })
     .then(page => {
@@ -227,7 +227,11 @@ router.put("/:pageId/paragraphs/:paragraphId", passport.authenticate("jwt", conf
     })
     .then(paragraph => {
       if (!paragraph) next("Error, paragraph could not be updated");
-      else return Site.findById(req.params.pageId).populate("_paragraphs");
+      else
+        return Site.findById(req.params.pageId).populate({
+          path: "_paragraphs",
+          populate: { path: "_categories", match: { _owner: req.user._id } }
+        });
     })
     .then(page => {
       if (!page) next("Error, page could not be updated");
@@ -255,7 +259,7 @@ router.delete("/:pageId/paragraphs/:paragraphId", passport.authenticate("jwt", c
           req.params.pageId,
           { $pull: { _paragraphs: paragraph._id } },
           { new: true }
-        ).populate("_paragraphs");
+        ).populate({ path: "_paragraphs", populate: { path: "_categories", match: { _owner: req.user._id } } });
     })
     .then(page => {
       if (!page) next("Error, page could not be updated");
