@@ -211,4 +211,27 @@ router.post("/:pageId/paragraphs", passport.authenticate("jwt", config.jwtSessio
 });
 //#endregion
 
+//#region PUT PARAGRAPH Notebooks/:pageId/paragraphs/:paragraphId
+router.put("/:pageId/paragraphs/:paragraphId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+  accessQueries
+    .findOneNotebookWithAccessThroughSiteId(req.params.pageId, req.user._id)
+    .then(notebook => {
+      if (!notebook) next("Error, no access to page or wrong id");
+      else {
+        const { text, _categories } = req.body;
+        return Paragraph.findByIdAndUpdate(req.params.paragraphId, { text, _categories }, { new: true });
+      }
+    })
+    .then(paragraph => {
+      if (!paragraph) next("Error, paragraph could not be updated");
+      else return Site.findById(req.params.pageId).populate("_paragraphs");
+    })
+    .then(page => {
+      if (!page) next("Error, page could not be updated");
+      else res.json(page);
+    })
+    .catch(err => next(err));
+});
+//#endregion
+
 module.exports = router;
