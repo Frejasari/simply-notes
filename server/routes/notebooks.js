@@ -37,11 +37,15 @@ router.get("/error", (req, res, next) => {
 });
 //#endregion
 
-//#region PUT Notebooks/NotebookId
+//#region PUT Notebooks/:notebookId
 router.put("/:notebookId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
-  const { title, description } = req.body;
+  const { title, description, _collaborators } = req.body;
   accessQueries
-    .findOneNotebookWithAccessThroughIdAndUpdate(req.params.notebookId, req.user._id, { title, description })
+    .findOneNotebookWithAccessThroughIdAndUpdate(req.params.notebookId, req.user._id, {
+      title,
+      description,
+      _collaborators
+    })
     .then(notebook => {
       if (!notebook)
         res.json("ERROR, notebook could not be updated, either you're not authorized or there's no such notebook");
@@ -84,7 +88,7 @@ router.get("/sites/:siteId", passport.authenticate("jwt", config.jwtSession), (r
     .then(notebook => {
       if (!notebook) next("ERROR no rights or no site");
       else
-        Site.findById(req.params.siteId)
+        return Site.findById(req.params.siteId)
           .populate("_paragraphs")
           .then(site => {
             if (!site) next("ERROR no site");
