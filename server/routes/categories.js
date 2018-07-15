@@ -58,7 +58,7 @@ const getAndShowCategoriesOfUser = (userId, res) => {
     .select("name")
     .then(categories => {
       if (!categories) next("Error, categories not found");
-      else res.json(categories);
+      else res.json({ success: true, categories });
     });
 };
 

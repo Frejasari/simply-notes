@@ -112,7 +112,7 @@ router.post("/:notebookId/sites", passport.authenticate("jwt", config.jwtSession
           .then(site => {
             if (!site) next("Error, page could not be created");
             else {
-              res.json(site);
+              res.json({ success: true, site });
               notebook._sites.push(site._id);
               return notebook.save();
             }
@@ -142,7 +142,7 @@ router.put("/sites/:siteId", passport.authenticate("jwt", config.jwtSession), (r
           .then(site => {
             if (!site) next("Error, site could not be created");
             else {
-              res.json(site);
+              res.json({ success: true, site });
               notebook._sites.push(site._id);
               return notebook.save();
             }
@@ -176,7 +176,7 @@ router.delete("/sites/:pageId", passport.authenticate("jwt", config.jwtSession),
     })
     .then(([_, notebook]) => {
       if (!notebook) next("Error, page could not be deleted");
-      else res.json(notebook);
+      else res.json({ success: true, notebook });
     })
     .catch(err => next(err));
 });
@@ -208,7 +208,7 @@ router.post("/:pageId/paragraphs", passport.authenticate("jwt", config.jwtSessio
     })
     .then(page => {
       if (!page) next("Error, page could not be updated");
-      else res.json(page);
+      else res.json({ success: true, page });
     })
     .catch(err => next(err));
 });
@@ -235,7 +235,7 @@ router.put("/:pageId/paragraphs/:paragraphId", passport.authenticate("jwt", conf
     })
     .then(page => {
       if (!page) next("Error, page could not be updated");
-      else res.json(page);
+      else res.json({ success: true, page });
     })
     .catch(err => next(err));
 });
@@ -263,7 +263,7 @@ router.delete("/:pageId/paragraphs/:paragraphId", passport.authenticate("jwt", c
     })
     .then(page => {
       if (!page) next("Error, page could not be updated");
-      else res.json(page);
+      else res.json({ success: true, page });
     })
     .catch(err => next(err));
 });
