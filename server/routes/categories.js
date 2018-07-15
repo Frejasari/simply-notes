@@ -28,6 +28,18 @@ router.post("/", passport.authenticate("jwt", config.jwtSession), (req, res, nex
 });
 //#endregion
 
+//#region PUT categories/:categoryId
+router.put("/:categoryId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+  accessQueries
+    .findOneCategoryWithAccessAndUpdate(req.params.categoryId, req.user._id, { name: req.body.name })
+    .then(category => {
+      if (!category) next("Error, category could not be updated, no access or category does not exist");
+      else return res.json(category);
+    })
+    .catch(err => next(err));
+});
+//#endregion
+
 const getAndShowCategoriesOfUser = (userId, res) => {
   return Category.find({ _owner: userId })
     .select("name")

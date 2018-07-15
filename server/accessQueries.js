@@ -1,4 +1,5 @@
 const Notebook = require("./models/Notebook");
+const Category = require("./models/Category");
 
 module.exports = {
   findOneNotebookWithAccessThroughId: (notebookId, userId) =>
@@ -8,5 +9,8 @@ module.exports = {
     Notebook.findOneAndUpdate({ $and: [{ _owner: userId }, { _id: notebookId }] }, updatedUser, { new: true }),
 
   findOneNotebookWithAccessThroughSiteId: (siteId, userId) =>
-    Notebook.findOne({ $and: [{ _sites: siteId }, { _collaborators: userId }] })
+    Notebook.findOne({ $and: [{ _sites: siteId }, { _collaborators: userId }] }),
+
+  findOneCategoryWithAccessAndUpdate: (categoryId, userId, updatedCategory) =>
+    Category.findOneAndUpdate({ $and: [{ _id: categoryId, _owner: userId }] }, updatedCategory, { new: true })
 };
