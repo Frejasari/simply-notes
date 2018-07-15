@@ -11,7 +11,6 @@ var router = express.Router();
 //#region GET Notebooks // GET Notebooks/:NotebookId
 // Route to get all notebooks of the user
 router.get("/", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
-  console.log("ROUTER GET NOTEBOOKS CALLED");
   Notebook.find({ _collaborators: req.user._id })
     .then(notebooks => {
       res.json(notebooks);
@@ -89,7 +88,7 @@ router.get("/sites/:siteId", passport.authenticate("jwt", config.jwtSession), (r
       if (!notebook) next("ERROR no rights or no site");
       else
         return Site.findById(req.params.siteId)
-          .populate("_paragraphs")
+          .populate({ path: "_paragraphs", populate: { path: "_categories", match: { _owner: req.user._id } } })
           .then(site => {
             if (!site) next("ERROR no site");
             else res.json(site);
@@ -97,6 +96,7 @@ router.get("/sites/:siteId", passport.authenticate("jwt", config.jwtSession), (r
     })
     .catch(err => next(err));
 });
+
 //#endregion
 
 //#region POST Notebooks/:notebookId/sites/
@@ -108,6 +108,7 @@ router.post("/:notebookId/sites", passport.authenticate("jwt", config.jwtSession
       else {
         const { name, description } = req.body;
         Site.create({ name, description })
+          .populate({ path: "_paragraphs", populate: { path: "_categories", match: { _owner: req.user._id } } })
           .then(site => {
             if (!site) next("Error, page could not be created");
             else {
@@ -137,6 +138,7 @@ router.put("/sites/:siteId", passport.authenticate("jwt", config.jwtSession), (r
       else {
         const { name, description } = req.body;
         Site.findByIdAndUpdate(req.params.siteId, { name, description }, { new: true })
+          .populate({ path: "_paragraphs", populate: { path: "_categories", match: { _owner: req.user._id } } })
           .then(site => {
             if (!site) next("Error, site could not be created");
             else {
