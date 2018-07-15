@@ -145,8 +145,17 @@ Promise.all([
       });
     });
     console.log("Categories added to paragraphs");
+
+    return User.findByIdAndUpdate(
+      firstUserId,
+      { _categories: categories.map(category => category._id) },
+      { new: true }
+    );
   })
-  .then(_ => Paragraph.create(paragraphs))
+  .then(user => {
+    console.log("User updated with categories", user);
+    return Paragraph.create(paragraphs);
+  })
   .then(paragraphs => {
     console.log("Paragraphs seeded");
     for (let i = 0; i < paragraphs.length; i += 3) {
