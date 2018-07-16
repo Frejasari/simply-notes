@@ -50,18 +50,18 @@ const notebooks = [
 
 const sites = [
   {
-    name: "Module 1 - Frontend",
+    title: "Module 1 - Frontend",
     description: "2 Weeks learning Frontend Development using HTML, CSS, Bootstrap, JS, jQuery",
     _paragraphs: []
   },
   {
-    name: "Module 2 - Backend",
+    title: "Module 2 - Backend",
     description:
       "2 Weeks learning Backend Development using express, node.js, hbs, passport and many other npm packages",
     _paragraphs: []
   },
   {
-    name: "Module 3 - React",
+    title: "Module 3 - React",
     description:
       "3rd module of the bootcamp, frontend again - how to build a fullstack application using the React.js framework",
     _paragraphs: []

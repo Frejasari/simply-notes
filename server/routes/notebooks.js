@@ -106,8 +106,8 @@ router.post("/:notebookId/sites", passport.authenticate("jwt", config.jwtSession
     .then(notebook => {
       if (!notebook) next("ERROR, no rights or no notebook");
       else {
-        const { name, description } = req.body;
-        Site.create({ name, description })
+        const { title, description } = req.body;
+        Site.create({ title, description })
           .populate({ path: "_paragraphs", populate: { path: "_categories", match: { _owner: req.user._id } } })
           .then(site => {
             if (!site) next("Error, page could not be created");
@@ -136,8 +136,8 @@ router.put("/sites/:siteId", passport.authenticate("jwt", config.jwtSession), (r
     .then(notebook => {
       if (!notebook) next("ERROR, no rights or no notebook");
       else {
-        const { name, description } = req.body;
-        Site.findByIdAndUpdate(req.params.siteId, { name, description }, { new: true })
+        const { title, description } = req.body;
+        Site.findByIdAndUpdate(req.params.siteId, { title, description }, { new: true })
           .populate({ path: "_paragraphs", populate: { path: "_categories", match: { _owner: req.user._id } } })
           .then(site => {
             if (!site) next("Error, site could not be created");

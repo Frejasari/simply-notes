@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const siteSchema = new mongoose.Schema(
   {
-    name: {
+    title: {
       type: String,
       default: Date.now()
     },
