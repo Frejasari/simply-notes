@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Route, Link, Switch } from "react-router-dom";
 import Navigation from "./Navigation";
 import Home from "./Home";
-import Notebook from "./Notebooks";
+import NotebookList from "./NotebookList";
 import AddNotebook from "./AddNotebook";
 import Secret from "./Secret";
 import Login from "./Login";
@@ -30,8 +30,7 @@ class App extends Component {
         <section className="content container">
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/notebooks" component={Notebook} />
-            <Route path="/notebooks/:notebookId" component={Notebook} />
+            <Route path="/notebooks" exact component={NotebookList} />
             <Route path="/add-notebook" component={AddNotebook} />
             <Route path="/signup" component={Signup} />
             <Route path="/login" component={Login} />
