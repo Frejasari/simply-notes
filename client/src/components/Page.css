@@ -1,0 +1,30 @@
+.paragraph-container {
+  position: relative;
+}
+
+.textarea {
+  width: 360px;
+  outline: none;
+  min-height: 20px;
+  padding: 0;
+  box-shadow: none;
+  display: block;
+  border: none;
+  overflow: hidden;
+  resize: none;
+  transition: height 0.2s ease;
+}
+
+.textarea:focus {
+  background-color: green;
+}
+
+.textarea--ghost {
+  opacity: 0.3;
+  display: block;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+}
