@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
+import api from "../api";
 
 const NavItem = props => (
   <li className="nav-item">
@@ -69,6 +70,7 @@ class Navigation extends Component {
           <ul className="navbar-nav mr-auto">
             <NavItem path="/">Home</NavItem>
             <NavItem path="/notebooks">Notebooks</NavItem>
+            {!api.isLoggedIn() && <NavItem path="/login">Login</NavItem>}
             <NavDropdown name="Create">
               <Link className="dropdown-item" to="/add-notebook">
                 Notebook
