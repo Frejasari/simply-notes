@@ -1,5 +1,4 @@
 import axios from "axios";
-import { puts } from "util";
 
 const service = axios.create({
   baseURL: process.env.NODE_ENV === "production" ? "/api" : "http://localhost:3030/api"

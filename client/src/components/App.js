@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Link, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Navigation from "./Navigation";
 import Home from "./Home";
 import NotebookList from "./NotebookList";
