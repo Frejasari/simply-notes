@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 const NavItem = props => (
   <li className="nav-item">
@@ -9,7 +9,42 @@ const NavItem = props => (
   </li>
 );
 
-class NavDropdown extends Component {}
+class NavDropdown extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isShown: false
+    };
+    this.toggleDropdown = this.toggleDropdown.bind(this);
+  }
+  toggleDropdown(event) {
+    event.preventDefault();
+    this.setState(prevState => ({ isShown: !prevState.isShown }));
+  }
+  render() {
+    const classDropownMenu = "dropdown-menu" + (this.state.isShown ? " show" : "");
+    return (
+      <li className="nav-item dropdown">
+        <Link
+          className="nav-link dropdown-toggle"
+          to="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+          tabIndex="0"
+          onClick={this.toggleDropdown}
+        >
+          {this.props.name}
+        </Link>
+        <div className={classDropownMenu} aria-labelledby="navbarDropdown" onClick={this.toggleDropdown}>
+          {this.props.children}
+        </div>
+      </li>
+    );
+  }
+}
 
 class Navigation extends Component {
   render() {
@@ -34,37 +69,18 @@ class Navigation extends Component {
           <ul className="navbar-nav mr-auto">
             <NavItem path="/">Home</NavItem>
             <NavItem path="/notebooks">Notebooks</NavItem>
-            {/* <NavItem path="/ /">Home</NavItem> */}
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Dropdown
+            <NavDropdown name="Create">
+              <Link className="dropdown-item" to="add-notebook">
+                Notebook
+              </Link>
+              <Link className="dropdown-item" to="add-page">
+                Page
+              </Link>
+              <div className="dropdown-divider" />
+              <a className="dropdown-item" href="#">
+                Something else here
               </a>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="#">
-                  Action
-                </a>
-                <a className="dropdown-item" href="#">
-                  Another action
-                </a>
-                <div className="dropdown-divider" />
-                <a className="dropdown-item" href="#">
-                  Something else here
-                </a>
-              </div>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link disabled" href="#">
-                Disabled
-              </a>
-            </li>
+            </NavDropdown>
           </ul>
           <form className="form-inline my-2 my-lg-0">
             <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
