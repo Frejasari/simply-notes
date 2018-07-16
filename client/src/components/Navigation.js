@@ -70,10 +70,10 @@ class Navigation extends Component {
             <NavItem path="/">Home</NavItem>
             <NavItem path="/notebooks">Notebooks</NavItem>
             <NavDropdown name="Create">
-              <Link className="dropdown-item" to="add-notebook">
+              <Link className="dropdown-item" to="/add-notebook">
                 Notebook
               </Link>
-              <Link className="dropdown-item" to="add-page">
+              <Link className="dropdown-item" to="/add-page">
                 Page
               </Link>
               <div className="dropdown-divider" />
