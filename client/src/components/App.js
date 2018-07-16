@@ -5,6 +5,7 @@ import Home from "./Home";
 import NotebookList from "./NotebookList";
 import AddNotebook from "./AddNotebook";
 import NotebookDetails from "./NotebookDetails";
+import Page from "./Page";
 import Secret from "./Secret";
 import Login from "./Login";
 import Signup from "./Signup";
@@ -33,6 +34,7 @@ class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/notebooks" exact component={NotebookList} />
             <Route path="/notebooks/:notebookId" exact component={NotebookDetails} />
+            <Route path="/notebooks/sites/:pageId" exact component={Page} />
             <Route path="/add-notebook" component={AddNotebook} />
             <Route path="/signup" component={Signup} />
             <Route path="/login" component={Login} />
