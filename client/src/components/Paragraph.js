@@ -76,6 +76,7 @@ class ContentEditable extends Component {
     return (
       <div
         className={`editable-div ${this.props.className}`}
+        onFocus={this.props.handleFocusChange}
         onInput={this.handleTextChange}
         onBlur={this.handleFocusLost}
         contentEditable={true}

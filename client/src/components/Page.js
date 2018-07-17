@@ -10,6 +10,7 @@ class Page extends Component {
       currentFocus: null
     };
     this.deleteParagraph = this.deleteParagraph.bind(this);
+    this.setFocus = this.setFocus.bind(this);
   }
   createNewParagraph(i) {
     api
@@ -23,6 +24,9 @@ class Page extends Component {
     api.deleteParagraph(this.state.page._id, paragraphId).then(res => {
       this.setState({ page: res.page });
     });
+  }
+  setFocus(id) {
+    this.setState({ currentFocus: id });
   }
   componentDidMount() {
     api
@@ -50,6 +54,7 @@ class Page extends Component {
               isCurrentFocus={this.state.currentFocus === p._id}
               createNewParagraph={_ => this.createNewParagraph(i)}
               deleteParagraph={this.deleteParagraph}
+              handleFocusChange={this.setFocus}
             />
           </div>
         ))}
