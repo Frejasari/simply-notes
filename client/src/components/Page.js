@@ -8,6 +8,7 @@ class Page extends Component {
     this.state = {
       page: null
     };
+    this.deleteParagraph = this.deleteParagraph.bind(this);
   }
   createNewParagraph(i) {
     api
@@ -16,6 +17,11 @@ class Page extends Component {
         this.setState({ page: res.page });
       })
       .catch(err => console.log(err));
+  }
+  deleteParagraph(paragraphId) {
+    api.deleteParagraph(this.state.page._id, paragraphId).then(res => {
+      this.setState({ page: res.page });
+    });
   }
   componentDidMount() {
     api
@@ -36,7 +42,12 @@ class Page extends Component {
         <p>{page.description}</p>
         {page._paragraphs.map((p, i) => (
           <div key={p._id}>
-            <Paragraph paragraph={p} index={i} createNewParagraph={_ => this.createNewParagraph(i)} />
+            <Paragraph
+              paragraph={p}
+              index={i}
+              createNewParagraph={_ => this.createNewParagraph(i)}
+              deleteParagraph={this.deleteParagraph}
+            />
           </div>
         ))}
       </div>

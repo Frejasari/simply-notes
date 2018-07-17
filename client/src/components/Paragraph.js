@@ -36,6 +36,12 @@ class ContentEditable extends Component {
         event.preventDefault();
         this.props.createNewParagraph();
       }
+      case "Backspace": {
+        if (!this.state.html) {
+          event.preventDefault();
+          this.props.deleteParagraph(this.state._id);
+        }
+      }
     }
   }
   handleKeyDownEvents(event) {
@@ -83,8 +89,10 @@ class Paragraph extends Component {
   render() {
     const paragraph = this.props.paragraph;
     if (!paragraph) return <div>... loading</div>;
+    // console.log("RENDER PARAGRAPH", this.props.paragraph._id);
     return (
       <div className={"row"}>
+        {this.props.index}
         <CategoryDiv
           className={`col-pixel-width-100 ${this.props.index === 0 ? "first-category-div" : ""}`}
           categories={paragraph._categories}
@@ -94,6 +102,7 @@ class Paragraph extends Component {
           html={paragraph.text}
           _id={paragraph._id}
           createNewParagraph={this.props.createNewParagraph}
+          deleteParagraph={this.props.deleteParagraph}
         />
       </div>
     );
