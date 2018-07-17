@@ -1,30 +1,41 @@
-.paragraph-container {
-  position: relative;
+.category-div {
+  width: 200px;
+  font-size: 10px;
+  background-color: rgba(218, 211, 197, 0.8);
+  border-top: 1px dashed rgba(64, 73, 94, 1);
 }
 
-.textarea {
-  width: 360px;
+.first-category-div {
+  border-top: none !important;
+}
+
+.editable-div {
   outline: none;
-  min-height: 20px;
-  padding: 0;
-  box-shadow: none;
-  display: block;
-  border: none;
-  overflow: hidden;
-  resize: none;
-  transition: height 0.2s ease;
+  /* border-right: 1px solid black; */
+  border-left: 1px solid black;
+  /* background-color: rgba(224, 224, 224, 0.5); */
+  background-color: rgba(218, 211, 197, 0.5);
 }
 
-.textarea:focus {
-  background-color: green;
+.editable-div:focus {
+  /* background-color: rgba(143, 164, 152, 0.5); */
+  background-color: rgba(184, 173, 147, 0.5);
 }
 
-.textarea--ghost {
-  opacity: 0.3;
-  display: block;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  visibility: hidden;
-  position: absolute;
-  top: 0;
+.col-pixel-width-100 {
+  /* This is the short-hand for flex-grow, flex-shrink, and flex-basis */
+  flex: 0 0 100px;
+}
+
+.container {
+  width: auto;
+  max-width: none;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 90vw;
+
+    /* max-width: 540px; */
+  }
 }
