@@ -25,6 +25,7 @@ class ContentEditable extends Component {
     this.setState({ html: event.target.innerHTML, hasChanged: true });
   }
 
+  //#region Handle Keyevents
   handleKeyUpEvents(event) {
     switch (event.key) {
       case "Alt": {
@@ -50,7 +51,9 @@ class ContentEditable extends Component {
         this.setState({ isAltPressed: true });
     }
   }
+  //#endregion
 
+  //#region Lifecycle
   shouldComponentUpdate(nextProps, nextState) {
     return ReactDOM.findDOMNode(this).innerHTML !== nextState.html;
   }
@@ -67,6 +70,7 @@ class ContentEditable extends Component {
       />
     );
   }
+  //#endregion
 }
 //#endregion
 
