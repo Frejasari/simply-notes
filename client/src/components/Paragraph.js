@@ -14,6 +14,7 @@ class ContentEditable extends Component {
 
     this.textInputRef = null;
     this.setTextInputRef = this.setTextInputRef.bind(this);
+    this.focusTextInput = this.focusTextInput.bind(this);
   }
 
   handleFocusLost(event) {
@@ -31,6 +32,10 @@ class ContentEditable extends Component {
   setTextInputRef(element) {
     this.textInput = element;
   }
+  focusTextInput() {
+    if (this.textInput && this.props.isCurrentFocus) this.textInput.focus();
+  }
+
   //#region Handle Keyevents
   handleKeyUpEvents(event) {
     switch (event.key) {
@@ -60,6 +65,9 @@ class ContentEditable extends Component {
   //#endregion
 
   //#region Lifecycle
+  componentDidMount() {
+    this.focusTextInput();
+  }
   shouldComponentUpdate(nextProps, nextState) {
     if (this.textInput) return this.textInput.innerHTML !== nextState.html;
     else return true;
@@ -110,6 +118,7 @@ class Paragraph extends Component {
           categories={paragraph._categories}
         />
         <ContentEditable
+          isCurrentFocus={this.props.isCurrentFocus}
           className={`col`}
           html={paragraph.text}
           _id={paragraph._id}

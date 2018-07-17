@@ -6,7 +6,8 @@ class Page extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: null
+      page: null,
+      currentFocus: null
     };
     this.deleteParagraph = this.deleteParagraph.bind(this);
   }
@@ -28,7 +29,8 @@ class Page extends Component {
       .getPage(this.props.match.params.pageId)
       .then(page => {
         this.setState({
-          page: page
+          page: page,
+          currentFocus: page._paragraphs[0]._id
         });
       })
       .catch(err => console.log(err));
@@ -45,6 +47,7 @@ class Page extends Component {
             <Paragraph
               paragraph={p}
               index={i}
+              isCurrentFocus={this.state.currentFocus === p._id}
               createNewParagraph={_ => this.createNewParagraph(i)}
               deleteParagraph={this.deleteParagraph}
             />
