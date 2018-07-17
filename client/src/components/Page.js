@@ -9,6 +9,14 @@ class Page extends Component {
       page: null
     };
   }
+  createNewParagraph(i) {
+    api
+      .createParagraph(this.state.page._id, { text: " ", position: i + 1 })
+      .then(res => {
+        this.setState({ page: res.page });
+      })
+      .catch(err => console.log(err));
+  }
   componentDidMount() {
     api
       .getPage(this.props.match.params.pageId)
@@ -20,15 +28,15 @@ class Page extends Component {
       .catch(err => console.log(err));
   }
   render() {
-    if (!this.state.page) return <div>loading....</div>;
     const page = this.state.page;
+    if (!page) return <div>loading....</div>;
     return (
       <div className="Notebooks">
         <h2>{page.title}</h2>
         <p>{page.description}</p>
         {page._paragraphs.map((p, i) => (
           <div key={p._id}>
-            <Paragraph paragraph={p} index={i} />
+            <Paragraph paragraph={p} index={i} createNewParagraph={_ => this.createNewParagraph(i)} />
           </div>
         ))}
       </div>

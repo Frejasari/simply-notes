@@ -34,6 +34,7 @@ class ContentEditable extends Component {
       case "Enter": {
         if (!this.state.isAltPressed) break;
         event.preventDefault();
+        this.props.createNewParagraph();
       }
     }
   }
@@ -88,8 +89,12 @@ class Paragraph extends Component {
           className={`col-pixel-width-100 ${this.props.index === 0 ? "first-category-div" : ""}`}
           categories={paragraph._categories}
         />
+        <ContentEditable
+          className={`col`}
+          html={paragraph.text}
+          _id={paragraph._id}
+          createNewParagraph={this.props.createNewParagraph}
         />
-        <ContentEditable className={`col`} html={this.props.paragraph.text} _id={this.props.paragraph._id} />
       </div>
     );
   }
