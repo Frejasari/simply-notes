@@ -7,9 +7,11 @@ var ReactDOM = require("react-dom");
 class ContentEditable extends Component {
   constructor(props) {
     super(props);
-    this.state = { html: this.props.html, _id: this.props._id, hasChanged: false };
+    this.state = { html: this.props.html, _id: this.props._id, hasChanged: false, isAltPressed: false };
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleFocusLost = this.handleFocusLost.bind(this);
+    this.handleKeyUpEvents = this.handleKeyUpEvents.bind(this);
+    this.handleKeyDownEvents = this.handleKeyDownEvents.bind(this);
   }
   handleFocusLost(event) {
     if (this.state.hasChanged)
@@ -22,17 +24,38 @@ class ContentEditable extends Component {
     event.preventDefault();
     this.setState({ html: event.target.innerHTML, hasChanged: true });
   }
+
+  handleKeyUpEvents(event) {
+    switch (event.key) {
+      case "Alt": {
+        this.setState({ isAltPressed: false });
+        break;
+      }
+      case "Enter": {
+        if (!this.state.isAltPressed) break;
+        event.preventDefault();
+      }
+    }
+  }
+  handleKeyDownEvents(event) {
+    switch (event.key) {
+      case "Alt":
+        this.setState({ isAltPressed: true });
+    }
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     return ReactDOM.findDOMNode(this).innerHTML !== nextState.html;
   }
   render() {
-    console.log("RENDER CONTENT EDITABLE");
     return (
       <div
         className={`editable-div ${this.props.className}`}
         onInput={this.handleTextChange}
         onBlur={this.handleFocusLost}
         contentEditable={true}
+        onKeyUp={this.handleKeyUpEvents}
+        onKeyDown={this.handleKeyDownEvents}
         dangerouslySetInnerHTML={{ __html: this.state.html }}
       />
     );
