@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./Page.css";
 import api from "../api";
-var ReactDOM = require("react-dom");
 
 //#region Content Editable Div -- with state
 class ContentEditable extends Component {
@@ -12,7 +11,11 @@ class ContentEditable extends Component {
     this.handleFocusLost = this.handleFocusLost.bind(this);
     this.handleKeyUpEvents = this.handleKeyUpEvents.bind(this);
     this.handleKeyDownEvents = this.handleKeyDownEvents.bind(this);
+
+    this.textInputRef = null;
+    this.setTextInputRef = this.setTextInputRef.bind(this);
   }
+
   handleFocusLost(event) {
     if (this.state.hasChanged)
       api
@@ -25,6 +28,9 @@ class ContentEditable extends Component {
     this.setState({ html: event.target.innerHTML, hasChanged: true });
   }
 
+  setTextInputRef(element) {
+    this.textInput = element;
+  }
   //#region Handle Keyevents
   handleKeyUpEvents(event) {
     switch (event.key) {
@@ -55,7 +61,8 @@ class ContentEditable extends Component {
 
   //#region Lifecycle
   shouldComponentUpdate(nextProps, nextState) {
-    return ReactDOM.findDOMNode(this).innerHTML !== nextState.html;
+    if (this.textInput) return this.textInput.innerHTML !== nextState.html;
+    else return true;
   }
   render() {
     return (
@@ -67,6 +74,7 @@ class ContentEditable extends Component {
         onKeyUp={this.handleKeyUpEvents}
         onKeyDown={this.handleKeyDownEvents}
         dangerouslySetInnerHTML={{ __html: this.state.html }}
+        ref={this.setTextInputRef}
       />
     );
   }
