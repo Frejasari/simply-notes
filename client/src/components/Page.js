@@ -8,13 +8,8 @@ class Page extends Component {
     this.state = {
       page: null
     };
-    this.handleEditClick = this.handleEditClick.bind();
-  }
-  handleEditClick(e) {
-    console.log("HANDLE EDIT CLICK", e.target.id);
   }
   componentDidMount() {
-    console.log("PAGEID", this.props.match.params.pageId);
     api
       .getPage(this.props.match.params.pageId)
       .then(page => {
