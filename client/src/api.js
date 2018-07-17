@@ -81,9 +81,9 @@ export default {
       .catch(errHandler);
   },
 
-  editParagraph(pageId, paragraphId, data) {
+  editParagraph(paragraphId, data) {
     return service
-      .put(`/notebooks/${pageId}/paragraphs/${paragraphId}`, data)
+      .put(`/notebooks/paragraphs/${paragraphId}`, data)
       .then(res => res.data)
       .catch(errHandler);
   },

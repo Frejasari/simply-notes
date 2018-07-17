@@ -214,23 +214,27 @@ router.post("/:pageId/paragraphs", passport.authenticate("jwt", config.jwtSessio
 });
 //#endregion
 
-//#region PUT PARAGRAPH Notebooks/:pageId/paragraphs/:paragraphId
-router.put("/:pageId/paragraphs/:paragraphId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
-  accessQueries
-    .findOneNotebookWithAccessThroughSiteId(req.params.pageId, req.user._id)
+//#region PUT PARAGRAPH Notebooks/paragraphs/:paragraphId
+router.put("/paragraphs/:paragraphId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+  console.log("PARAGRAPH PUT CALLED", req.params);
+  accessQueries.findOneNotebookWithAccessThroughPId
+    .call(accessQueries, req.params.paragraphId, req.user._id)
     .then(notebook => {
       if (!notebook) next("Error, no access to page or wrong id");
       else {
         const { text, _categories } = req.body;
+        if (!text && _categories)
+          return Paragraph.findByIdAndUpdate(req.params.paragraphId, { _categories }, { new: true });
+        if (!_categories && text) return Paragraph.findByIdAndUpdate(req.params.paragraphId, { text }, { new: true });
         return Paragraph.findByIdAndUpdate(req.params.paragraphId, { text, _categories }, { new: true });
       }
     })
     .then(paragraph => {
       if (!paragraph) next("Error, paragraph could not be updated");
       else
-        return Site.findById(req.params.pageId).populate({
+        return Site.findOne({ _paragraphs: req.params.paragraphId }).populate({
           path: "_paragraphs",
-          populate: { path: "_categories", match: { _owner: req.user._id } }
+          populate: { path: "_categories", match: { _owner: req.user._id }, select: "name" }
         });
     })
     .then(page => {
