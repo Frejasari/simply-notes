@@ -80,11 +80,14 @@ class CategoryDiv extends Component {
 //#region Paragraph : Content Editable Div + Category Div
 class Paragraph extends Component {
   render() {
+    const paragraph = this.props.paragraph;
+    if (!paragraph) return <div>... loading</div>;
     return (
       <div className={"row"}>
         <CategoryDiv
           className={`col-pixel-width-100 ${this.props.index === 0 ? "first-category-div" : ""}`}
-          categories={this.props.paragraph._categories}
+          categories={paragraph._categories}
+        />
         />
         <ContentEditable className={`col`} html={this.props.paragraph.text} _id={this.props.paragraph._id} />
       </div>
