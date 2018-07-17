@@ -216,17 +216,18 @@ router.post("/:pageId/paragraphs", passport.authenticate("jwt", config.jwtSessio
 
 //#region PUT PARAGRAPH Notebooks/paragraphs/:paragraphId
 router.put("/paragraphs/:paragraphId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
-  console.log("PARAGRAPH PUT CALLED", req.params);
   accessQueries.findOneNotebookWithAccessThroughPId
     .call(accessQueries, req.params.paragraphId, req.user._id)
     .then(notebook => {
       if (!notebook) next("Error, no access to page or wrong id");
       else {
         const { text, _categories } = req.body;
-        if (!text && _categories)
+        if (typeof text === undefined && _categories)
           return Paragraph.findByIdAndUpdate(req.params.paragraphId, { _categories }, { new: true });
-        if (!_categories && text) return Paragraph.findByIdAndUpdate(req.params.paragraphId, { text }, { new: true });
-        return Paragraph.findByIdAndUpdate(req.params.paragraphId, { text, _categories }, { new: true });
+        if (!_categories && typeof text === "string")
+          return Paragraph.findByIdAndUpdate(req.params.paragraphId, { text }, { new: true });
+        if (typeof text === "string" && _categories)
+          return Paragraph.findByIdAndUpdate(req.params.paragraphId, { text, _categories }, { new: true });
       }
     })
     .then(paragraph => {
