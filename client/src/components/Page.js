@@ -22,11 +22,16 @@ class Page extends Component {
   }
   deleteParagraph(paragraphId) {
     api.deleteParagraph(this.state.page._id, paragraphId).then(res => {
-      this.setState({ page: res.page });
+      this.setState(state => {
+        const paragraphArr = state.page._paragraphs;
+        const indexOfNewParagraph = paragraphArr.findIndex(p => p._id === paragraphId) - 1;
+        const paragraphBeforeDeletedOne = paragraphArr[indexOfNewParagraph >= 0 ? indexOfNewParagraph : 1]._id;
+        return { page: res.page, currentFocus: paragraphBeforeDeletedOne };
+      });
     });
   }
   setFocus(id) {
-    this.setState({ currentFocus: id });
+    if (this.state.currentFocus !== id) this.setState({ currentFocus: id });
   }
   componentDidMount() {
     api

@@ -33,7 +33,9 @@ class ContentEditable extends Component {
     this.textInput = element;
   }
   focusTextInput() {
-    if (this.textInput && this.props.isCurrentFocus) this.textInput.focus();
+    if (this.textInput && this.mounted) {
+      this.textInput.focus();
+    }
   }
 
   //#region Handle Keyevents
@@ -66,11 +68,16 @@ class ContentEditable extends Component {
 
   //#region Lifecycle
   componentDidMount() {
-    this.focusTextInput();
+    this.mounted = true;
+    if (this.props.isCurrentFocus) this.focusTextInput(true);
+  }
+  componentWillUnmount() {
+    this.mounted = false;
   }
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.textInput) return this.textInput.innerHTML !== nextState.html;
-    else return true;
+    if (nextProps.isCurrentFocus && nextProps.isCurrentFocus !== this.props.isCurrentFocus) this.focusTextInput();
+    if (this.textInput && this.mounted) return this.textInput.innerHTML !== nextState.html;
+    else if (this.mounted) return true;
   }
   render() {
     return (
@@ -107,6 +114,13 @@ class CategoryDiv extends Component {
 
 //#region Paragraph : Content Editable Div + Category Div
 class Paragraph extends Component {
+  constructor(props) {
+    super(props);
+    this.handleFocusGainOfEditable = this.handleFocusGainOfEditable.bind(this);
+  }
+  handleFocusGainOfEditable() {
+    this.props.handleFocusChange(this.props.paragraph._id);
+  }
   render() {
     const paragraph = this.props.paragraph;
     if (!paragraph) return <div>... loading</div>;
@@ -114,6 +128,7 @@ class Paragraph extends Component {
     return (
       <div className={"row"}>
         {this.props.index}
+        {this.props.isCurrentFocus ? "true" : "false"}
         <CategoryDiv
           className={`col-pixel-width-100 ${this.props.index === 0 ? "first-category-div" : ""}`}
           categories={paragraph._categories}
@@ -125,6 +140,7 @@ class Paragraph extends Component {
           _id={paragraph._id}
           createNewParagraph={this.props.createNewParagraph}
           deleteParagraph={this.props.deleteParagraph}
+          handleFocusChange={this.handleFocusGainOfEditable}
         />
       </div>
     );
