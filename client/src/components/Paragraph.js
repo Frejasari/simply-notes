@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Page.css";
 import api from "../api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 //#region Content Editable Div -- with state
 class ContentEditable extends Component {
@@ -124,7 +125,6 @@ class Paragraph extends Component {
   render() {
     const paragraph = this.props.paragraph;
     if (!paragraph) return <div>... loading</div>;
-    // console.log("RENDER PARAGRAPH", this.props.paragraph._id);
     return (
       <div className={"row"}>
         {this.props.index}
@@ -142,6 +142,11 @@ class Paragraph extends Component {
           deleteParagraph={this.props.deleteParagraph}
           handleFocusChange={this.handleFocusGainOfEditable}
         />
+        <div className="position-relative">
+          <button type="button" className="add-btn" onClick={this.props.createNewParagraph}>
+            <FontAwesomeIcon icon="plus" size="xs" inverse />
+          </button>
+        </div>
       </div>
     );
   }

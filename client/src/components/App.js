@@ -11,6 +11,11 @@ import Login from "./Login";
 import Signup from "./Signup";
 import api from "../api";
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faPlus);
+
 class App extends Component {
   constructor(props) {
     super(props);

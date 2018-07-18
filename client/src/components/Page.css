@@ -22,6 +22,30 @@
   background-color: rgba(184, 173, 147, 0.5);
 }
 
+.add-btn {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 0;
+  height: 1.2rem;
+  width: 1.2rem;
+  background-color: rgba(143, 164, 152, 0.5);
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  line-height: 50%;
+  border-radius: 0.2rem;
+  border-bottom-right-radius: 0;
+}
+
+.add-btn:hover {
+  background-color: rgba(143, 164, 152, 0.7);
+}
+
+button:focus {
+  outline: 0;
+}
+
 .col-pixel-width-100 {
   /* This is the short-hand for flex-grow, flex-shrink, and flex-basis */
   flex: 0 0 100px;
