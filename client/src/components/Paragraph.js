@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class ContentEditable extends Component {
   constructor(props) {
     super(props);
-    this.state = { html: this.props.html, _id: this.props._id, hasChanged: false, isAltPressed: false };
+    this.state = { html: this.props.html, _id: this.props._id, hasChanged: false };
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleFocusLost = this.handleFocusLost.bind(this);
     this.handleKeyUpEvents = this.handleKeyUpEvents.bind(this);
@@ -43,11 +43,11 @@ class ContentEditable extends Component {
   handleKeyUpEvents(event) {
     switch (event.key) {
       case "Alt": {
-        this.setState({ isAltPressed: false });
+        this.props.handleAltPress(false);
         break;
       }
       case "Enter": {
-        if (!this.state.isAltPressed) break;
+        if (!this.props.isAltPressed) break;
         event.preventDefault();
         this.props.createNewParagraph();
       }
@@ -62,7 +62,7 @@ class ContentEditable extends Component {
   handleKeyDownEvents(event) {
     switch (event.key) {
       case "Alt":
-        this.setState({ isAltPressed: true });
+        this.props.handleAltPress(true);
     }
   }
   //#endregion
@@ -134,6 +134,8 @@ class Paragraph extends Component {
           categories={paragraph._categories}
         />
         <ContentEditable
+          isAltPressed={this.props.isAltPressed}
+          handleAltPress={this.props.handleAltPress}
           isCurrentFocus={this.props.isCurrentFocus}
           className={`col`}
           html={paragraph.text}

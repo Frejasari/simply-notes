@@ -9,10 +9,18 @@ class Page extends Component {
     super(props);
     this.state = {
       page: null,
-      currentFocus: null
+      currentFocus: null,
+      isAltPressed: false
     };
     this.deleteParagraph = this.deleteParagraph.bind(this);
     this.setFocus = this.setFocus.bind(this);
+    this.handleAltPress = this.handleAltPress.bind(this);
+  }
+  handleAltPress(isPressed) {
+    if (isPressed !== this.state.isAltPressed)
+      this.setState(prevState => ({
+        isAltPressed: !prevState.isAltPressed
+      }));
   }
   createNewParagraph(position) {
     api
@@ -59,10 +67,12 @@ class Page extends Component {
             <Paragraph
               paragraph={p}
               index={i}
+              isAltPressed={this.state.isAltPressed}
               isCurrentFocus={this.state.currentFocus === p._id}
               createNewParagraph={_ => this.createNewParagraph(i + 1)}
               deleteParagraph={this.deleteParagraph}
               handleFocusChange={this.setFocus}
+              handleAltPress={this.handleAltPress}
             />
           </div>
         ))}
