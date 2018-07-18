@@ -6,12 +6,30 @@ class CategoryDiv extends Component {
     return (
       <div className={`${this.props.className} category-div`}>
         {this.props.categories.map((category, i) => (
-          <b key={category._id}> {i === 0 ? category.name : `, ${category.name}`}</b>
+          <CategoryButton key={category._id} color={category.color}>
+            {category.name}
+          </CategoryButton>
         ))}
       </div>
     );
   }
 }
 //#endregion
+
+const CategoryButton = props => {
+  return (
+    <div className="category-pill-container">
+      <div className="category-pill category-pill--off" style={{ borderColor: `${props.color}90` }}>
+        {props.children}
+      </div>
+      <div
+        className="category-pill category-pill--on"
+        style={{ backgroundColor: `${props.color}90`, borderColor: `transparent` }}
+      >
+        {props.children}
+      </div>
+    </div>
+  );
+};
 
 export default CategoryDiv;

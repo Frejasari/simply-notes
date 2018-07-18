@@ -1,3 +1,4 @@
+/* CATEGORIE */
 .category-div {
   width: 200px;
   font-size: 10px;
@@ -9,6 +10,32 @@
   border-top: none !important;
 }
 
+.category-pill-container {
+  display: inline-block;
+}
+
+.category-pill {
+  border-radius: 0.2rem;
+  border-bottom-right-radius: 0;
+  padding: 0.05rem 0.2rem;
+  border-width: 1.5px;
+  border-style: solid;
+  margin: 0.08rem 0.08rem 0.08rem 0;
+  cursor: pointer;
+  position: relative;
+  font-size: 0.7rem;
+}
+
+.category-pill-container .category-pill--on,
+.category-pill-container:hover .category-pill--off {
+  display: none;
+}
+
+.category-pill-container:hover .category-pill--on {
+  display: block;
+}
+
+/* EDITABLE  */
 .editable-div {
   outline: none;
   /* border-right: 1px solid black; */
