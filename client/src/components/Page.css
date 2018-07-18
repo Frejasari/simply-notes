@@ -1,7 +1,7 @@
 .category-div {
   width: 200px;
   font-size: 10px;
-  background-color: rgba(218, 211, 197, 0.8);
+  /* background-color: rgba(218, 211, 197, 0.8); */
   border-top: 1px dashed rgba(64, 73, 94, 1);
 }
 
@@ -14,7 +14,7 @@
   /* border-right: 1px solid black; */
   border-left: 1px solid black;
   /* background-color: rgba(224, 224, 224, 0.5); */
-  background-color: rgba(218, 211, 197, 0.5);
+  /* background-color: rgba(218, 211, 197, 0.5); */
 }
 
 .editable-div:focus {
