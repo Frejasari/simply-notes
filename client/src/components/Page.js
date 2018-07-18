@@ -12,11 +12,14 @@ class Page extends Component {
       currentFocus: null,
       isAltPressed: false
     };
+    //#region bind methods to this class
     this.deleteParagraph = this.deleteParagraph.bind(this);
     this.setFocus = this.setFocus.bind(this);
     this.handleFocusChange = this.handleFocusChange.bind(this);
     this.handleAltPress = this.handleAltPress.bind(this);
+    //#endregion
   }
+  //#region handle focus changes of paragraphs when creating/ deleting or switching between them
   handleAltPress(isPressed) {
     if (isPressed !== this.state.isAltPressed)
       this.setState(prevState => ({
@@ -61,6 +64,9 @@ class Page extends Component {
   setFocus(id) {
     if (this.state.currentFocus !== id) this.setState({ currentFocus: id });
   }
+  //#endregion
+
+  //#region lifecycle
   componentDidMount() {
     api
       .getPage(this.props.match.params.pageId)
@@ -98,6 +104,7 @@ class Page extends Component {
       </div>
     );
   }
+  //#endregion
 }
 
 const AddButton = props => {

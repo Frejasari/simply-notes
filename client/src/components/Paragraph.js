@@ -1,117 +1,6 @@
 import React, { Component } from "react";
-import "./Page.css";
-import api from "../api";
+import ContentEditable from "./ContentEditable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-//#region Content Editable Div -- with state
-class ContentEditable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { html: this.props.html, _id: this.props._id, hasChanged: false };
-    this.handleTextChange = this.handleTextChange.bind(this);
-    this.handleFocusLost = this.handleFocusLost.bind(this);
-    this.handleKeyUpEvents = this.handleKeyUpEvents.bind(this);
-    this.handleKeyDownEvents = this.handleKeyDownEvents.bind(this);
-
-    this.textInputRef = null;
-    this.setTextInputRef = this.setTextInputRef.bind(this);
-    this.focusTextInput = this.focusTextInput.bind(this);
-  }
-
-  handleFocusLost(event) {
-    if (this.state.hasChanged)
-      api
-        .editParagraph(this.state._id, { text: this.state.html })
-        .then(page => this.setState({ hasChanged: false }))
-        .catch(err => console.log(err));
-  }
-  handleTextChange(event) {
-    event.preventDefault();
-    this.setState({ html: event.target.innerHTML, hasChanged: true });
-  }
-
-  setTextInputRef(element) {
-    this.textInput = element;
-  }
-  focusTextInput() {
-    if (this.textInput && this.mounted) {
-      this.textInput.focus();
-    }
-  }
-
-  //#region Handle Keyevents
-  handleKeyUpEvents(event) {
-    switch (event.key) {
-      case "Alt": {
-        this.props.handleAltPress(false);
-        break;
-      }
-      case "Enter": {
-        if (!this.props.isAltPressed) break;
-        event.preventDefault();
-        this.props.createNewParagraph();
-      }
-      case "Backspace": {
-        if (!this.state.html) {
-          event.preventDefault();
-          this.props.deleteParagraph(this.state._id);
-        }
-      }
-    }
-  }
-  handleKeyDownEvents(event) {
-    switch (event.key) {
-      case "Alt":
-        this.props.handleAltPress(true);
-      case "ArrowDown": {
-        if (this.props.isAltPressed) {
-          event.preventDefault();
-          this.props.handleFocusChange("down");
-        }
-        break;
-      }
-      case "ArrowUp": {
-        if (this.props.isAltPressed) {
-          event.preventDefault();
-          this.props.handleFocusChange("up");
-        }
-        break;
-      }
-    }
-  }
-  //#endregion
-
-  //#region Lifecycle
-  componentDidMount() {
-    this.mounted = true;
-    if (this.props.isCurrentFocus) this.focusTextInput(true);
-  }
-  componentWillUnmount() {
-    this.mounted = false;
-  }
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.isCurrentFocus && nextProps.isCurrentFocus !== this.props.isCurrentFocus) this.focusTextInput();
-    if (this.textInput && this.mounted) return this.textInput.innerHTML !== nextState.html;
-    else if (this.mounted) return true;
-  }
-  render() {
-    return (
-      <div
-        className={`editable-div ${this.props.className}`}
-        onFocus={_ => this.props.handleFocusGain(this.props._id)}
-        onInput={this.handleTextChange}
-        onBlur={this.handleFocusLost}
-        contentEditable={true}
-        onKeyUp={this.handleKeyUpEvents}
-        onKeyDown={this.handleKeyDownEvents}
-        dangerouslySetInnerHTML={{ __html: this.state.html }}
-        ref={this.setTextInputRef}
-      />
-    );
-  }
-  //#endregion
-}
-//#endregion
 
 //#region Div for the categories
 class CategoryDiv extends Component {
@@ -137,8 +26,6 @@ class Paragraph extends Component {
     if (!paragraph) return <div>... loading</div>;
     return (
       <div className={"row"}>
-        {this.props.index}
-        {this.props.isCurrentFocus ? "true" : "false"}
         <CategoryDiv
           className={`col-pixel-width-100 ${this.props.index === 0 ? "first-category-div" : ""}`}
           categories={paragraph._categories}
@@ -157,7 +44,7 @@ class Paragraph extends Component {
         />
         <div className="position-relative">
           <button type="button" className="add-btn" onClick={this.props.createNewParagraph}>
-            <FontAwesomeIcon icon="plus" size="xs" inverse />
+            <FontAwesomeIcon icon="plus" size="xs" />
           </button>
         </div>
       </div>
