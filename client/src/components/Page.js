@@ -12,8 +12,7 @@ class Page extends Component {
     this.deleteParagraph = this.deleteParagraph.bind(this);
     this.setFocus = this.setFocus.bind(this);
   }
-  createNewParagraph(i) {
-    const position = i + 1;
+  createNewParagraph(position) {
     api
       .createParagraph(this.state.page._id, { text: " ", position })
       .then(res => {
@@ -58,7 +57,7 @@ class Page extends Component {
               paragraph={p}
               index={i}
               isCurrentFocus={this.state.currentFocus === p._id}
-              createNewParagraph={_ => this.createNewParagraph(i)}
+              createNewParagraph={_ => this.createNewParagraph(i + 1)}
               deleteParagraph={this.deleteParagraph}
               handleFocusChange={this.setFocus}
             />
