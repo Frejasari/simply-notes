@@ -19,7 +19,7 @@ router.get("/", passport.authenticate("jwt", config.jwtSession), (req, res, next
 
 //#region POST categories
 router.post("/", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
-  Category.create({ _owner: req.user._id, name: req.body.name })
+  Category.create({ _owner: req.user._id, name: req.body.name, color: req.body.color })
     .then(category => {
       if (!category) next("Error, category could not be created");
       else getAndShowCategoriesOfUser(req.user._id, res);
@@ -31,7 +31,10 @@ router.post("/", passport.authenticate("jwt", config.jwtSession), (req, res, nex
 //#region PUT categories/:categoryId
 router.put("/:categoryId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
   accessQueries
-    .findOneCategoryWithAccessAndUpdate(req.params.categoryId, req.user._id, { name: req.body.name })
+    .findOneCategoryWithAccessAndUpdate(req.params.categoryId, req.user._id, {
+      name: req.body.name,
+      color: req.body.color
+    })
     .then(category => {
       if (!category) next("Error, category could not be updated, no access or category does not exist");
       else return getAndShowCategoriesOfUser(req.user._id, res);
