@@ -63,6 +63,20 @@ class ContentEditable extends Component {
     switch (event.key) {
       case "Alt":
         this.props.handleAltPress(true);
+      case "ArrowDown": {
+        if (this.props.isAltPressed) {
+          event.preventDefault();
+          this.props.handleFocusChange("down");
+        }
+        break;
+      }
+      case "ArrowUp": {
+        if (this.props.isAltPressed) {
+          event.preventDefault();
+          this.props.handleFocusChange("up");
+        }
+        break;
+      }
     }
   }
   //#endregion
@@ -139,6 +153,7 @@ class Paragraph extends Component {
           createNewParagraph={this.props.createNewParagraph}
           deleteParagraph={this.props.deleteParagraph}
           handleFocusGain={this.props.handleFocusGain}
+          handleFocusChange={this.props.handleFocusChange}
         />
         <div className="position-relative">
           <button type="button" className="add-btn" onClick={this.props.createNewParagraph}>

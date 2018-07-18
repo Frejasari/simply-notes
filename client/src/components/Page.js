@@ -14,6 +14,7 @@ class Page extends Component {
     };
     this.deleteParagraph = this.deleteParagraph.bind(this);
     this.setFocus = this.setFocus.bind(this);
+    this.handleFocusChange = this.handleFocusChange.bind(this);
     this.handleAltPress = this.handleAltPress.bind(this);
   }
   handleAltPress(isPressed) {
@@ -38,6 +39,23 @@ class Page extends Component {
         const paragraphBeforeDeletedOne = paragraphArr[indexOfNewParagraph >= 0 ? indexOfNewParagraph : 1]._id;
         return { page: res.page, currentFocus: paragraphBeforeDeletedOne };
       });
+    });
+  }
+  handleFocusChange(direction) {
+    this.setState(prevState => {
+      const paragraphArr = prevState.page._paragraphs;
+      const indexOfCurrFocusParagraph = paragraphArr.findIndex(p => p._id === prevState.currentFocus);
+      let newParagraph = null;
+      if (direction === "up")
+        newParagraph = paragraphArr[indexOfCurrFocusParagraph > 0 ? indexOfCurrFocusParagraph - 1 : 0];
+      if (direction === "down")
+        newParagraph =
+          paragraphArr[
+            indexOfCurrFocusParagraph < paragraphArr.length - 1
+              ? indexOfCurrFocusParagraph + 1
+              : paragraphArr.length - 1
+          ];
+      return { currentFocus: newParagraph._id };
     });
   }
   setFocus(id) {
@@ -72,6 +90,7 @@ class Page extends Component {
               createNewParagraph={_ => this.createNewParagraph(i + 1)}
               deleteParagraph={this.deleteParagraph}
               handleFocusGain={this.setFocus}
+              handleFocusChange={this.handleFocusChange}
               handleAltPress={this.handleAltPress}
             />
           </div>
