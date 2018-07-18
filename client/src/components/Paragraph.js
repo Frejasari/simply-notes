@@ -1,20 +1,7 @@
 import React, { Component } from "react";
 import ContentEditable from "./ContentEditable";
+import CategoryDiv from "./CategoryDiv";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-//#region Div for the categories
-class CategoryDiv extends Component {
-  render() {
-    return (
-      <div className={`${this.props.className} category-div`}>
-        {this.props.categories.map((category, i) => (
-          <b key={category._id}> {i === 0 ? category.name : `, ${category.name}`}</b>
-        ))}
-      </div>
-    );
-  }
-}
-//#endregion
 
 //#region Paragraph : Content Editable Div + Category Div
 class Paragraph extends Component {
