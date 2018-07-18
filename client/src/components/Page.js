@@ -13,10 +13,11 @@ class Page extends Component {
     this.setFocus = this.setFocus.bind(this);
   }
   createNewParagraph(i) {
+    const position = i + 1;
     api
-      .createParagraph(this.state.page._id, { text: " ", position: i + 1 })
+      .createParagraph(this.state.page._id, { text: " ", position })
       .then(res => {
-        this.setState({ page: res.page });
+        this.setState({ page: res.page, currentFocus: res.page._paragraphs[position]._id });
       })
       .catch(err => console.log(err));
   }
