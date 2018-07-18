@@ -71,7 +71,7 @@ class Page extends Component {
               isCurrentFocus={this.state.currentFocus === p._id}
               createNewParagraph={_ => this.createNewParagraph(i + 1)}
               deleteParagraph={this.deleteParagraph}
-              handleFocusChange={this.setFocus}
+              handleFocusGain={this.setFocus}
               handleAltPress={this.handleAltPress}
             />
           </div>

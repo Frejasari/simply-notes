@@ -84,7 +84,7 @@ class ContentEditable extends Component {
     return (
       <div
         className={`editable-div ${this.props.className}`}
-        onFocus={this.props.handleFocusChange}
+        onFocus={_ => this.props.handleFocusGain(this.props._id)}
         onInput={this.handleTextChange}
         onBlur={this.handleFocusLost}
         contentEditable={true}
@@ -117,10 +117,6 @@ class CategoryDiv extends Component {
 class Paragraph extends Component {
   constructor(props) {
     super(props);
-    this.handleFocusGainOfEditable = this.handleFocusGainOfEditable.bind(this);
-  }
-  handleFocusGainOfEditable() {
-    this.props.handleFocusChange(this.props.paragraph._id);
   }
   render() {
     const paragraph = this.props.paragraph;
@@ -142,7 +138,7 @@ class Paragraph extends Component {
           _id={paragraph._id}
           createNewParagraph={this.props.createNewParagraph}
           deleteParagraph={this.props.deleteParagraph}
-          handleFocusChange={this.handleFocusGainOfEditable}
+          handleFocusGain={this.props.handleFocusGain}
         />
         <div className="position-relative">
           <button type="button" className="add-btn" onClick={this.props.createNewParagraph}>
