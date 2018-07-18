@@ -94,11 +94,11 @@ const paragraphs = [
 
 //#region  Categories
 let categories = [
-  { name: "Express", _owner: null },
-  { name: "Hbs", _owner: null },
-  { name: "Node.js", _owner: null },
-  { name: "Terminal", _owner: null },
-  { name: "Mongoose", _owner: null },
+  { name: "Express", _owner: null, color: "#A5243D" },
+  { name: "Hbs", _owner: null, color: "#EA7AF4" },
+  { name: "Node.js", _owner: null, color: "#473BF0" },
+  { name: "Terminal", _owner: null, color: "#FFE74C" },
+  { name: "Mongoose", _owner: null, color: "#7CFFCB" },
   { name: "The Internet", _owner: null }
 ];
 //#endregion
