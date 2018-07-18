@@ -42,6 +42,25 @@
   background-color: rgba(143, 164, 152, 0.7);
 }
 
+.add-first-btn {
+  padding: 0;
+  height: 1.2rem;
+  width: 40%;
+  background-color: rgba(143, 164, 152, 0.7);
+  border: none;
+  margin-bottom: 2px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 50%;
+  border-radius: 0.2rem;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.add-first-btn:hover {
+  background-color: rgba(143, 164, 152, 0.9);
+}
+
 button:focus {
   outline: 0;
 }

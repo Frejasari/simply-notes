@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import api from "../api";
 import Paragraph from "./Paragraph";
+import api from "../api";
+import "./Page.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Page extends Component {
   constructor(props) {
@@ -51,6 +53,7 @@ class Page extends Component {
       <div className="Notebooks">
         <h2>{page.title}</h2>
         <p>{page.description}</p>
+        <AddButton createNewParagraph={_ => this.createNewParagraph(0)} />
         {page._paragraphs.map((p, i) => (
           <div key={p._id}>
             <Paragraph
@@ -67,5 +70,17 @@ class Page extends Component {
     );
   }
 }
+
+const AddButton = props => {
+  return (
+    <div className="row">
+      <div className="col text-right pr-0">
+        <button type="button" className="add-first-btn" onClick={props.createNewParagraph}>
+          <FontAwesomeIcon icon="plus" size="xs" />
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export default Page;
