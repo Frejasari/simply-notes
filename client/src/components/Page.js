@@ -118,7 +118,7 @@ class Page extends Component {
 const AddButton = props => {
   return (
     <div className="row">
-      <div className="col text-right pr-0">
+      <div className="col text-right">
         <button type="button" className="add-first-btn" onClick={props.createNewParagraph}>
           <FontAwesomeIcon icon="plus" size="xs" />
         </button>

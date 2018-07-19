@@ -31,7 +31,7 @@ class Paragraph extends Component {
           handleFocusGain={this.props.handleFocusGain}
           handleFocusChange={this.props.handleFocusChange}
         />
-        <div className="position-relative">
+        <div className="position-relative mr-3">
           <button type="button" className="add-btn" onClick={this.props.createNewParagraph}>
             <FontAwesomeIcon icon="plus" size="xs" />
           </button>
