@@ -51,6 +51,31 @@
   display: block;
 }
 
+.add-category-btn {
+  position: absolute;
+  right: 0.1rem;
+  bottom: 0.1rem;
+  font-size: 16px;
+  display: inline-block;
+  padding: 0;
+  height: 1.2rem;
+  width: 1.2rem;
+  background-color: transparent;
+  color: rgba(102, 112, 157, 0.9);
+  border: 1px solid rgba(102, 112, 157, 0.9);
+  cursor: pointer;
+  text-align: center;
+  line-height: 50%;
+  border-radius: 0.2rem;
+  border-bottom-right-radius: 0;
+}
+
+.add-category-btn:hover {
+  background-color: rgba(102, 112, 157, 0.9);
+  border: none;
+  color: white;
+}
+
 /* EDITABLE  */
 .editable-div {
   outline: none;
@@ -121,7 +146,13 @@ button:focus {
 
 .col-pixel-width-100 {
   /* This is the short-hand for flex-grow, flex-shrink, and flex-basis */
-  flex: 0 0 100px;
+  flex: 0 0 120px;
+}
+
+.col-pixel-width-12rem {
+  flex: 0 0 1.2rem;
+  padding-right: 0.3rem;
+  border-top: 1px dashed rgba(64, 73, 94, 1);
 }
 
 .container {

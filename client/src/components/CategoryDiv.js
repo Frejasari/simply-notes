@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CategoryButton from "./CategoryButton";
+import ChoseCategoriesOverlay from "./ChoseCategoriesOverlay";
 
 //#region Div for the categories
 class CategoryDiv extends Component {
@@ -11,6 +12,11 @@ class CategoryDiv extends Component {
             {category.name}
           </CategoryButton>
         ))}
+        <div>
+          <ChoseCategoriesOverlay
+            usedCategorieIds={this.props.categories.map(category => category._id)}
+          />
+        </div>
       </div>
     );
   }
