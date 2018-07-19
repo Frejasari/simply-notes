@@ -76,7 +76,7 @@ class Page extends Component {
   //#region lifecycle
   componentDidMount() {
     api
-      .getPage(this.props.match.params.pageId)
+      .getPage(this.props.match.params.notebookId, this.props.match.params.pageId)
       .then(page => {
         this.setState({
           page: page,

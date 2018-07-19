@@ -43,30 +43,30 @@ export default {
   //#endregion
 
   //#region Pages
-  getPage(pageId) {
+  getPage(notebookId, pageId) {
     return service
-      .get(`/notebooks/sites/${pageId}`)
+      .get(`/notebooks/${notebookId}/pages/${pageId}`)
       .then(res => res.data)
       .catch(errHandler);
   },
 
   createPage(notebookId, data) {
     return service
-      .post(`/notebooks/${notebookId}/sites`, data)
+      .post(`/notebooks/${notebookId}/pages`, data)
       .then(res => res.data)
       .catch(errHandler);
   },
 
   editPage(pageId, data) {
     return service
-      .put(`/notebooks/sites/${pageId}`, data)
+      .put(`/notebooks/pages/${pageId}`, data)
       .then(res => res.data)
       .catch(errHandler);
   },
 
   deletePage(pageId) {
     return service
-      .delete(`/notebooks/sites/${pageId}`)
+      .delete(`/notebooks/pages/${pageId}`)
       .then(res => res.data)
       .catch(errHandler);
   },

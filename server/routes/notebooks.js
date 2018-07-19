@@ -78,20 +78,20 @@ router.post("/", passport.authenticate("jwt", config.jwtSession), (req, res, nex
 });
 //#endregion
 
-// SITES
+// PAGES
 
-//#region GET get Notebooks/sites/:siteId
-router.get("/sites/:siteId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+//#region GET get Notebooks/:notebookId/pages/:pageId
+router.get("/:notebookId/pages/:pageId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
   accessQueries
-    .findOneNotebookWithAccessThroughSiteId(req.params.siteId, req.user._id)
+    .findOneNotebookWithAccessThroughSiteId(req.params.pageId, req.user._id)
     .then(notebook => {
-      if (!notebook) next("ERROR no rights or no site");
+      if (!notebook) next("ERROR no rights or no page");
       else
-        return Site.findById(req.params.siteId)
+        return Site.findById(req.params.pageId)
           .populate({ path: "_paragraphs", populate: { path: "_categories", match: { _owner: req.user._id } } })
-          .then(site => {
-            if (!site) next("ERROR no site");
-            else res.json(site);
+          .then(page => {
+            if (!page) next("ERROR no page");
+            else res.json(page);
           });
     })
     .catch(err => next(err));
@@ -99,8 +99,8 @@ router.get("/sites/:siteId", passport.authenticate("jwt", config.jwtSession), (r
 
 //#endregion
 
-//#region POST Notebooks/:notebookId/sites/
-router.post("/:notebookId/sites", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+//#region POST Notebooks/:notebookId/pages/
+router.post("/:notebookId/pages", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
   accessQueries
     .findOneNotebookWithAccessThroughId(req.params.notebookId, req.user._id)
     .then(notebook => {
@@ -109,11 +109,11 @@ router.post("/:notebookId/sites", passport.authenticate("jwt", config.jwtSession
         const { title, description } = req.body;
         Site.create({ title, description })
           .populate({ path: "_paragraphs", populate: { path: "_categories", match: { _owner: req.user._id } } })
-          .then(site => {
-            if (!site) next("Error, page could not be created");
+          .then(page => {
+            if (!page) next("Error, page could not be created");
             else {
-              res.json({ success: true, site });
-              notebook._sites.push(site._id);
+              res.json({ success: true, page });
+              notebook._sites.push(page._id);
               return notebook.save();
             }
           })
@@ -129,21 +129,21 @@ router.post("/:notebookId/sites", passport.authenticate("jwt", config.jwtSession
 });
 //#endregion
 
-//#region PUT Notebooks/sites/:siteId
-router.put("/sites/:siteId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+//#region PUT Notebooks/pages/:pageId
+router.put("/pages/:pageId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
   accessQueries
-    .findOneNotebookWithAccessThroughSiteId(req.params.siteId, req.user._id)
+    .findOneNotebookWithAccessThroughSiteId(req.params.pageId, req.user._id)
     .then(notebook => {
       if (!notebook) next("ERROR, no rights or no notebook");
       else {
         const { title, description } = req.body;
-        Site.findByIdAndUpdate(req.params.siteId, { title, description }, { new: true })
+        Site.findByIdAndUpdate(req.params.pageId, { title, description }, { new: true })
           .populate({ path: "_paragraphs", populate: { path: "_categories", match: { _owner: req.user._id } } })
-          .then(site => {
-            if (!site) next("Error, site could not be created");
+          .then(page => {
+            if (!page) next("Error, site could not be created");
             else {
-              res.json({ success: true, site });
-              notebook._sites.push(site._id);
+              res.json({ success: true, page });
+              notebook._sites.push(page._id);
               return notebook.save();
             }
           })
@@ -158,13 +158,13 @@ router.put("/sites/:siteId", passport.authenticate("jwt", config.jwtSession), (r
 });
 //#endregion
 
-//#region DELETE Notebooks/sites/:siteId
-router.delete("/sites/:pageId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+//#region DELETE Notebooks/pages/:pageId
+router.delete("/pages/:pageId", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
   accessQueries
     .findOneNotebookWithAccessThroughSiteId(req.params.pageId, req.user._id)
     .populate("_sites")
     .then(notebook => {
-      if (!notebook) next("Error, no rights or no site");
+      if (!notebook) next("Error, no rights or no page");
       else {
         const promises = [Site.findByIdAndRemove(req.params.pageId)];
         const pages = notebook._sites;

@@ -34,7 +34,7 @@ class NotebookDetails extends Component {
           {notebook._sites.map(page => (
             <PageListItem
               data={page}
-              link={`/notebooks/sites/${page._id}`}
+              link={`/notebooks/${this.state.notebook._id}/pages/${page._id}`}
               key={page._id}
               handleEditClick={this.handleEditClick}
             />
