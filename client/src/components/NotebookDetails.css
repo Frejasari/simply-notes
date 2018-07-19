@@ -1,0 +1,50 @@
+.list-card {
+  border-bottom-right-radius: 0;
+}
+
+.show-info-btn {
+  font-size: 16px;
+  display: inline-block;
+  padding: 0;
+  height: 1.2rem;
+  width: 1.2rem;
+  background-color: transparent;
+  color: rgba(102, 112, 157, 0.9);
+  border: 1px solid rgba(102, 112, 157, 0.9);
+  cursor: pointer;
+  text-align: center;
+  line-height: 50%;
+  border-radius: 0.2rem;
+  border-bottom-right-radius: 0;
+  outline: 0;
+}
+.show-info-btn:hover {
+  background-color: rgba(102, 112, 157, 0.9);
+  color: white;
+  border: 1px solid rgba(102, 112, 157, 0.9);
+}
+.show-info-btn:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+.list-header a {
+  /* font-family: "Courier New", Courier, monospace; */
+  font-size: 1.1rem;
+  color: rgba(64, 73, 94, 0.9);
+}
+
+.list-header a:hover {
+  color: rgba(143, 164, 152, 1);
+  text-decoration: none;
+}
+
+.list-description {
+  padding-top: 1rem;
+  color: rgba(102, 112, 157, 1);
+}
+
+.card-body {
+  padding: 1rem;
+  line-height: normal;
+}

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import api from "../api";
 import PageListItem from "./ListItemWithEditAndLink";
+import "./NotebookDetails.css";
 
 class NotebookDetails extends Component {
   constructor(props) {
