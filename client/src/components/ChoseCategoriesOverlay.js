@@ -15,6 +15,7 @@ class ChoseCategoriesOverlay extends React.Component {
     };
 
     this.toggle = this.toggle.bind(this);
+    this.handleSaveClick = this.handleSaveClick.bind(this);
   }
 
   toggle() {
@@ -33,6 +34,10 @@ class ChoseCategoriesOverlay extends React.Component {
       this.setState(oldState => ({
         usedCategorieIds: oldState.usedCategorieIds.filter(id => id !== categoryId)
       }));
+  }
+  handleSaveClick() {
+    this.toggle();
+    this.props.handleParagraphUpdate(this.props.paragraphId, this.state.usedCategorieIds);
   }
 
   componentDidMount() {
@@ -62,10 +67,7 @@ class ChoseCategoriesOverlay extends React.Component {
               ))}
           </ModalBody>
           <ModalFooter>
-            <Button
-              color="primary"
-              onClick={_ => this.props.handleParagraphUpdate(this.props.paragraphId, this.state.usedCategorieIds)}
-            >
+            <Button color="primary" onClick={this.handleSaveClick}>
               Save
             </Button>
             <Button color="secondary" onClick={this.toggle}>
