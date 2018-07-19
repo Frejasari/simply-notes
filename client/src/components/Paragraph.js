@@ -16,6 +16,8 @@ class Paragraph extends Component {
         <CategoryDiv
           className={`col-pixel-width-100 ${this.props.index === 0 ? "first-category-div" : ""}`}
           categories={paragraph._categories}
+          handleParagraphUpdate={this.props.handleParagraphUpdate}
+          paragraphId={paragraph._id}
         />
         <ContentEditable
           isAltPressed={this.props.isAltPressed}

@@ -62,7 +62,10 @@ class ChoseCategoriesOverlay extends React.Component {
               ))}
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>
+            <Button
+              color="primary"
+              onClick={_ => this.props.handleParagraphUpdate(this.props.paragraphId, this.state.usedCategorieIds)}
+            >
               Save
             </Button>
             <Button color="secondary" onClick={this.toggle}>

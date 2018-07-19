@@ -17,7 +17,14 @@ class Page extends Component {
     this.setFocus = this.setFocus.bind(this);
     this.handleFocusChange = this.handleFocusChange.bind(this);
     this.handleAltPress = this.handleAltPress.bind(this);
+    this.handleParagraphUpdate = this.handleParagraphUpdate.bind(this);
     //#endregion
+  }
+  handleParagraphUpdate(paragraphId, newParagraphs) {
+    console.log("HANDLE PARAGRAPH UPDATE", paragraphId, newParagraphs);
+    api.editParagraph(paragraphId, { _categories: newParagraphs }).then(res => {
+      this.setState({ page: res.page });
+    });
   }
   //#region handle focus changes of paragraphs when creating/ deleting or switching between them
   handleAltPress(isPressed) {
@@ -98,6 +105,7 @@ class Page extends Component {
               handleFocusGain={this.setFocus}
               handleFocusChange={this.handleFocusChange}
               handleAltPress={this.handleAltPress}
+              handleParagraphUpdate={this.handleParagraphUpdate}
             />
           </div>
         ))}

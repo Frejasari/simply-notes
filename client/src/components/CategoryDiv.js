@@ -14,6 +14,8 @@ class CategoryDiv extends Component {
         ))}
         <div>
           <ChoseCategoriesOverlay
+            paragraphId={this.props.paragraphId}
+            handleParagraphUpdate={this.props.handleParagraphUpdate}
             usedCategorieIds={this.props.categories.map(category => category._id)}
           />
         </div>
