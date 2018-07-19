@@ -148,6 +148,7 @@ button:focus {
 .col-pixel-width-100 {
   /* This is the short-hand for flex-grow, flex-shrink, and flex-basis */
   flex: 0 0 120px;
+  margin-left: 15px;
 }
 
 .col-pixel-width-12rem {
