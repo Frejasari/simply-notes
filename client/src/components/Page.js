@@ -97,8 +97,8 @@ class Page extends Component {
     if (!page) return <div>loading....</div>;
     return (
       <div className="Notebooks">
-        <h2>{page.title}</h2>
-        <p>{page.description}</p>
+        {/* <h2>{page.title}</h2> */}
+        {/* <p>{page.description}</p> */}
         <AddButton createNewParagraph={_ => this.createNewParagraph(0)} />
         {page._paragraphs.map((p, i) => (
           <div key={p._id}>

@@ -26,7 +26,6 @@ class NotebookList extends Component {
   render() {
     return (
       <div className="Notebooks">
-        <h2>List of notebooks</h2>
         {this.state.notebooks.map(notebook => (
           <NotebookListItem
             data={notebook}
