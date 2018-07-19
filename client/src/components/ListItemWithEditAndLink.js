@@ -25,7 +25,7 @@ class ListItem extends Component {
               </div>
               <div className="col-auto d-flex align-items-center ml-1">
                 <Button className="show-info-btn" onClick={this.toggle}>
-                  <FontAwesomeIcon onClick={this.toggle} icon="angle-down" size="md" />
+                  <FontAwesomeIcon onClick={this.toggle} icon="angle-down" />
                 </Button>
               </div>
             </div>
