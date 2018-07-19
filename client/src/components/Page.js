@@ -90,7 +90,7 @@ class Page extends Component {
     this.getPageFromApi();
   }
   componentDidUpdate() {
-    if (this.props.match.params.pageId !== this.state.page._id) this.getPageFromApi();
+    if (!this.state.page || this.props.match.params.pageId !== this.state.page._id) this.getPageFromApi();
   }
   render() {
     const page = this.state.page;
