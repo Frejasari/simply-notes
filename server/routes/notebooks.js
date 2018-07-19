@@ -222,7 +222,7 @@ router.put("/paragraphs/:paragraphId", passport.authenticate("jwt", config.jwtSe
       if (!notebook) next("Error, no access to page or wrong id");
       else {
         const { text, _categories } = req.body;
-        if (typeof text === undefined && _categories)
+        if (typeof text === "undefined" && _categories)
           return Paragraph.findByIdAndUpdate(req.params.paragraphId, { _categories }, { new: true });
         if (!_categories && typeof text === "string")
           return Paragraph.findByIdAndUpdate(req.params.paragraphId, { text }, { new: true });
