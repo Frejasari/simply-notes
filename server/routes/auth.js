@@ -1,12 +1,11 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
-const jwt = require('jwt-simple');
-const passport = require('passport');
-const config = require('../config');
+const jwt = require("jwt-simple");
+const passport = require("passport");
+const config = require("../config");
 
-
-router.post('/signup', (req, res, next) => {
+router.post("/signup", (req, res, next) => {
   // extract the info we need from the body of the request
   const { email, name, password } = req.body;
   const user = new User({
@@ -20,7 +19,7 @@ router.post('/signup', (req, res, next) => {
   });
 });
 
-router.post('/login', (req, res, next) => {
+router.post("/login", (req, res, next) => {
   const authenticate = User.authenticate();
   const { email, password } = req.body;
   // check if we have a email and password
@@ -34,7 +33,7 @@ router.post('/login', (req, res, next) => {
       if (failed) {
         // failed logging (bad password, too many attempts, etc)
         return res.status(401).json({
-          error: failed.message,
+          error: failed.message
         });
       }
       if (user) {
@@ -43,7 +42,7 @@ router.post('/login', (req, res, next) => {
         // the id is usually enough because we can get back
         // the actual user by fetching the database later
         const payload = {
-          id: user.id,
+          id: user.id
         };
         // generate a token and send it
         // this token will contain the user.id encrypted
@@ -53,7 +52,7 @@ router.post('/login', (req, res, next) => {
         const token = jwt.encode(payload, config.jwtSecret);
         res.json({
           token,
-          name: user.name,
+          name: user.name
         });
       }
     });
@@ -65,7 +64,7 @@ router.post('/login', (req, res, next) => {
 
 // Example of secret route
 // If you use Postman, don't forget to add "Authorization" "Bearer <your-JWT>" (without "<" and ">")
-router.get('/secret', passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+router.get("/secret", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
   res.json({
     answerToLifeTheUniverseAndEverything: 42,
     user: req.user
