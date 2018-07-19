@@ -58,7 +58,7 @@ router.delete("/:categoryId", passport.authenticate("jwt", config.jwtSession), (
 
 const getAndShowCategoriesOfUser = (userId, res) => {
   return Category.find({ _owner: userId })
-    .select("name")
+    .select("name color")
     .then(categories => {
       if (!categories) next("Error, categories not found");
       else res.json({ success: true, categories });

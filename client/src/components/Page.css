@@ -169,3 +169,43 @@ button:focus {
     /* max-width: 540px; */
   }
 }
+
+.save-category-btn {
+  /* position: absolute; */
+  right: 0;
+  bottom: 0;
+  padding: 0;
+  height: 2.3rem;
+  width: 2.3rem;
+  /* background-color: rgba(143, 164, 152, 0.5); */
+  font-size: 1.8rem;
+  background-color: transparent;
+  color: rgba(143, 164, 152, 0.9);
+  /* background-color: rgba(143, 164, 152, 0.7); */
+  border: 1px solid rgba(143, 164, 152, 0.9);
+  /* border: none; */
+  cursor: pointer;
+  text-align: center;
+  line-height: 50%;
+  border-radius: 0.4rem;
+  border-bottom-right-radius: 0;
+}
+
+.save-category-btn:hover {
+  background-color: rgba(143, 164, 152, 0.7);
+  border: none;
+  color: white;
+}
+
+.color-checkbox {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0 0.3rem;
+  border: none;
+  cursor: pointer;
+}
+
+.color-checkbox.checked {
+  width: 1.6rem;
+  height: 1.6rem;
+}
