@@ -127,13 +127,6 @@ export default {
 
   //#endregion
 
-  getSecret() {
-    return service
-      .get("/secret")
-      .then(res => res.data)
-      .catch(errHandler);
-  },
-
   //#region Authentication & Authorization
   signup(userInfo) {
     return service
