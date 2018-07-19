@@ -7,7 +7,7 @@ const passport = require("passport");
 const { Strategy, ExtractJwt } = require("passport-jwt");
 
 const config = require("./config");
-var User = require("./models/user");
+var User = require("./models/User");
 var authRoutes = require("./routes/auth");
 var notebookRoutes = require("./routes/notebooks");
 var categoryRoutes = require("./routes/categories");
