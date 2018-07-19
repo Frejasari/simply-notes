@@ -1,9 +1,11 @@
 "use strict";
+require("dotenv").config();
 
 const mongoose = require("mongoose");
 const dbName = "simple-notes";
-const mongoUri = `mongodb://localhost/${dbName}`;
-// const mongoUri = process.env.MONGODB_URI || `mongodb://localhost/${dbName}`;
+// const mongoUri = `mongodb://localhost/${dbName}`;
+console.log("MONGO URI", process.env.MONGODB_URI);
+const mongoUri = process.env.MONGODB_URI || `mongodb://localhost/${dbName}`;
 
 // connect to the database
 mongoose.connect(mongoUri);
