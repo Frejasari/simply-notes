@@ -12,9 +12,9 @@ import Signup from "./Signup";
 import api from "../api";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faPencilAlt, faPen } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faPlus);
+library.add(faPlus, faPencilAlt, faPen);
 
 class App extends Component {
   constructor(props) {

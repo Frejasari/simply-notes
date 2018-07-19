@@ -83,7 +83,7 @@ class ChoseCategoriesOverlay extends React.Component {
 const AddCategoryButton = props => {
   return (
     <button type="button" className={`${props.className} add-category-btn`} onClick={props.handleClick}>
-      <FontAwesomeIcon icon="plus" size="xs" />
+      <FontAwesomeIcon icon="pen" size="xs" />
     </button>
   );
 };
