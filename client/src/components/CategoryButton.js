@@ -3,8 +3,6 @@ import React, { Component } from "react";
 const CategoryButton = props => {
   const selectedStyle = { backgroundColor: `${props.color}90`, borderColor: `transparent` };
   const unselectedStyle = { borderColor: `${props.color}90` };
-  console.log("probs", props);
-
   return (
     <div className="category-pill-container" onClick={props.handleClick}>
       <div
