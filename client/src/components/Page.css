@@ -1,5 +1,6 @@
 /* CATEGORIE */
 .category-div {
+  position: relative;
   width: 200px;
   font-size: 10px;
   /* background-color: rgba(218, 211, 197, 0.8); */
@@ -15,15 +16,30 @@
 }
 
 .category-pill {
+  border-style: solid;
+  cursor: pointer;
+  position: relative;
+}
+
+.category-pill-sm {
   border-radius: 0.2rem;
   border-bottom-right-radius: 0;
   padding: 0.05rem 0.2rem;
   border-width: 1.5px;
-  border-style: solid;
   margin: 0.08rem 0.08rem 0.08rem 0;
+  font-size: 0.7rem;
+}
+
+.category-pill-lg {
+  border-radius: 0.3rem;
+  border-bottom-right-radius: 0;
+  padding: 0.1rem 0.4rem;
+  border-width: 1.5px;
+  border-style: solid;
+  margin: 0.25rem;
   cursor: pointer;
   position: relative;
-  font-size: 0.7rem;
+  font-size: 1rem;
 }
 
 .category-pill-container .category-pill--on,
