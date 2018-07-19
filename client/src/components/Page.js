@@ -73,8 +73,7 @@ class Page extends Component {
   }
   //#endregion
 
-  //#region lifecycle
-  componentDidMount() {
+  getPageFromApi() {
     api
       .getPage(this.props.match.params.notebookId, this.props.match.params.pageId)
       .then(page => {
@@ -84,6 +83,14 @@ class Page extends Component {
         });
       })
       .catch(err => console.log(err));
+  }
+
+  //#region lifecycle
+  componentDidMount() {
+    this.getPageFromApi();
+  }
+  componentDidUpdate() {
+    if (this.props.match.params.pageId !== this.state.page._id) this.getPageFromApi();
   }
   render() {
     const page = this.state.page;
