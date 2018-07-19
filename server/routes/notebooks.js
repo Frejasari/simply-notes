@@ -235,7 +235,7 @@ router.put("/paragraphs/:paragraphId", passport.authenticate("jwt", config.jwtSe
       else
         return Site.findOne({ _paragraphs: req.params.paragraphId }).populate({
           path: "_paragraphs",
-          populate: { path: "_categories", match: { _owner: req.user._id }, select: "name" }
+          populate: { path: "_categories", match: { _owner: req.user._id }, select: "name color" }
         });
     })
     .then(page => {
