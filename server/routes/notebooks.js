@@ -74,11 +74,11 @@ router.post("/", passport.authenticate("jwt", config.jwtSession), (req, res, nex
   Notebook.create({ title, description, _owner: req.user._id, _collaborators: [req.user._id] })
     .then(notebook => {
       if (!notebook) res.json("ERROR, notebook could not be updated");
-      else
-        res.json({
-          success: true,
-          notebook
-        });
+      else return Notebook.find({ _collaborators: req.user._id });
+    })
+    .then(notebooks => {
+      if (notebooks) res.json({ success: true, notebooks });
+      else res.json("ERROR, there's no notebook with this id");
     })
     .catch(err => next(err));
 });

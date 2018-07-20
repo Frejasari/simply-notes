@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import api from "../api";
 import PageListItem from "./ListItemWithEditAndLink";
+import FormOverlayWithAddButton from "./FormOverlayWithAddButton";
 import "./NotebookDetails.css";
 
 class NotebookDetails extends Component {
@@ -31,6 +32,7 @@ class NotebookDetails extends Component {
     const notebook = this.state.notebook;
     return (
       <div className={`${this.props.className} Notebooks`}>
+        <FormOverlayWithAddButton headline="Add a new Page" handleAddClick={_ => this.createNewParagraph(0)} />
         {notebook._sites.map(page => (
           <PageListItem
             headline="Edit page"

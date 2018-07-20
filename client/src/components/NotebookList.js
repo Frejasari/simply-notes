@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import api from "../api";
 import NotebookListItem from "./ListItemWithEditAndLink";
+import FormOverlayWithAddButton from "./FormOverlayWithAddButton";
 
 class NotebookList extends Component {
   constructor(props) {
@@ -9,11 +10,22 @@ class NotebookList extends Component {
       notebooks: []
     };
     this.handleSaveClick = this.handleSaveClick.bind(this);
+    this.handleAddNotebookClick = this.handleAddNotebookClick.bind(this);
   }
   handleSaveClick(notebookId, title, description) {
     api.editNotebook(notebookId, { title, description }).then(res => {
       this.setState({ notebooks: res.notebooks });
     });
+  }
+  handleAddNotebookClick(title, description) {
+    if (title)
+      api
+        .createNotebooks({ title, description })
+        .then(res => {
+          console.log("RES", res);
+          this.setState({ notebooks: res.notebooks });
+        })
+        .catch(err => console.log(err));
   }
   componentDidMount() {
     api
@@ -28,8 +40,10 @@ class NotebookList extends Component {
   render() {
     return (
       <div className="Notebooks">
+        <FormOverlayWithAddButton headline="Add a new Notebook" handleSaveClick={this.handleAddNotebookClick} />
         {this.state.notebooks.map(notebook => (
           <NotebookListItem
+            className=""
             headline="Edit notebook"
             data={notebook}
             link={`/notebooks/${notebook._id}`}
