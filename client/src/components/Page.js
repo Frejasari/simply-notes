@@ -21,7 +21,6 @@ class Page extends Component {
     //#endregion
   }
   handleParagraphUpdate(paragraphId, newParagraphs) {
-    console.log("HANDLE PARAGRAPH UPDATE", paragraphId, newParagraphs);
     api.editParagraph(paragraphId, { _categories: newParagraphs }).then(res => {
       this.setState({ page: res.page });
     });

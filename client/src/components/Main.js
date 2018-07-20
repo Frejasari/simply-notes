@@ -37,7 +37,6 @@ class Main extends Component {
     );
   }
   getMediumScreenSetup() {
-    console.log("MEDIUM");
     return (
       <div className="row">
         <div className="col-6">
