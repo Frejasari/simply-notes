@@ -17,31 +17,33 @@ class ListItem extends Component {
 
   render() {
     return (
-      <div className="mb-1">
-        <Card className="list-card">
-          <CardBody className="list-header">
-            <div className="row no-gutters">
-              <div className="col">
-                <Link to={this.props.link}>{this.props.data.title}</Link>
+      <div className={`mb-1 ${this.props.className} row`}>
+        <div className="col">
+          <Card className="list-card">
+            <CardBody className="list-header">
+              <div className="row no-gutters">
+                <div className="col">
+                  <Link to={this.props.link}>{this.props.data.title}</Link>
+                </div>
+                <div className="col-auto d-flex align-items-center ml-1">
+                  <Button className="show-info-btn" onClick={this.toggle}>
+                    <FontAwesomeIcon onClick={this.toggle} icon="angle-down" />
+                  </Button>
+                </div>
               </div>
-              <div className="col-auto d-flex align-items-center ml-1">
-                <Button className="show-info-btn" onClick={this.toggle}>
-                  <FontAwesomeIcon onClick={this.toggle} icon="angle-down" />
-                </Button>
-              </div>
-            </div>
-            <Collapse isOpen={this.state.collapse}>
-              <CardText className="list-description">{this.props.data.description}</CardText>
-              <FormOverlay
-                headline={this.props.headline}
-                handleSaveClick={this.props.handleSaveClick}
-                title={this.props.data.title}
-                description={this.props.data.description}
-              />
-              {/* <Button href="#">Delete</Button> */}
-            </Collapse>
-          </CardBody>
-        </Card>
+              <Collapse isOpen={this.state.collapse}>
+                <CardText className="list-description">{this.props.data.description}</CardText>
+                <FormOverlay
+                  headline={this.props.headline}
+                  handleSaveClick={this.props.handleSaveClick}
+                  title={this.props.data.title}
+                  description={this.props.data.description}
+                />
+                {/* <Button href="#">Delete</Button> */}
+              </Collapse>
+            </CardBody>
+          </Card>
+        </div>
       </div>
     );
   }
