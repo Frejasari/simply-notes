@@ -114,19 +114,19 @@ router.post("/:notebookId/pages", passport.authenticate("jwt", config.jwtSession
       else {
         const { title, description } = req.body;
         Site.create({ title, description })
-          .populate({ path: "_paragraphs", populate: { path: "_categories", match: { _owner: req.user._id } } })
           .then(page => {
             if (!page) next("Error, page could not be created");
             else {
-              res.json({ success: true, page });
               notebook._sites.push(page._id);
               return notebook.save();
             }
           })
           .then(notebook => {
             if (!notebook) next("Error, notebook could not be updated");
-            // TODO: now?
-            else console.log("Notebook updated and saved!");
+            else return Notebook.findById(notebook._id).populate("_sites");
+          })
+          .then(notebook => {
+            res.json({ success: true, notebook });
           })
           .catch(err => next(err));
       }

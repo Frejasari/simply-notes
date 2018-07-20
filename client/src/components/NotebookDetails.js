@@ -11,11 +11,19 @@ class NotebookDetails extends Component {
       notebook: null
     };
     this.handleSaveClick = this.handleSaveClick.bind(this);
+    this.handleAddPageClick = this.handleAddPageClick.bind(this);
+  }
+  handleAddPageClick(title, description) {
+    if (title)
+      api.createPage(this.state.notebook._id, { title, description }).then(res => {
+        this.setState({ notebook: res.notebook });
+      });
   }
   handleSaveClick(pageId, title, description) {
-    api.editPage(pageId, { title, description }).then(res => {
-      this.setState({ notebook: res.notebook });
-    });
+    if (title)
+      api.editPage(pageId, { title, description }).then(res => {
+        this.setState({ notebook: res.notebook });
+      });
   }
   getNotebookFromApi() {
     api
@@ -39,7 +47,7 @@ class NotebookDetails extends Component {
     const notebook = this.state.notebook;
     return (
       <div className={`${this.props.className} Notebooks`}>
-        <FormOverlayWithAddButton headline="Add a new Page" handleAddClick={_ => this.createNewParagraph(0)} />
+        <FormOverlayWithAddButton headline="Add a new Page" handleSaveClick={this.handleAddPageClick} />
         {notebook._sites.map(page => (
           <PageListItem
             headline="Edit page"
