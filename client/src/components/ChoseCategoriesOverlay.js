@@ -4,6 +4,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Collapse, Label, In
 import CategoryButton from "./CategoryButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../api";
+import SaveCategoryButton from "./SaveButtonLarge";
 
 class ChoseCategoriesOverlay extends Component {
   constructor(props) {
@@ -41,12 +42,13 @@ class ChoseCategoriesOverlay extends Component {
     this.props.handleParagraphUpdate(this.props.paragraphId, this.state.usedCategorieIds);
   }
   handleCreateNewCategorySubmit(name, color) {
-    api.createCategory({ name, color }).then(res =>
-      this.setState(prevState => ({
-        categories: res.categories,
-        usedCategorieIds: [...prevState.usedCategorieIds, res.categories[res.categories.length - 1]._id]
-      }))
-    );
+    if (name)
+      api.createCategory({ name, color }).then(res =>
+        this.setState(prevState => ({
+          categories: res.categories,
+          usedCategorieIds: [...prevState.usedCategorieIds, res.categories[res.categories.length - 1]._id]
+        }))
+      );
   }
 
   componentDidMount() {
@@ -94,14 +96,6 @@ const EditCategoriesButton = props => {
   return (
     <button type="button" className={`${props.className} add-category-btn`} onClick={props.handleClick}>
       <FontAwesomeIcon icon="pen" size="xs" />
-    </button>
-  );
-};
-
-const SaveCategoryButton = props => {
-  return (
-    <button type="button" className={`${props.className} save-category-btn`} onClick={props.handleClick}>
-      <FontAwesomeIcon icon="save" />
     </button>
   );
 };

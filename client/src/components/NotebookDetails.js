@@ -9,10 +9,12 @@ class NotebookDetails extends Component {
     this.state = {
       notebook: null
     };
-    this.handleEditClick = this.handleEditClick.bind();
+    this.handleSaveClick = this.handleSaveClick.bind(this);
   }
-  handleEditClick(e) {
-    console.log("HANDLE EDIT CLICK", e.target.id);
+  handleSaveClick(pageId, title, description) {
+    api.editPage(pageId, { title, description }).then(res => {
+      this.setState({ notebook: res.notebook });
+    });
   }
   componentDidMount() {
     api
@@ -35,6 +37,7 @@ class NotebookDetails extends Component {
             link={`/notebooks/${this.state.notebook._id}/pages/${page._id}`}
             key={page._id}
             handleEditClick={this.handleEditClick}
+            handleSaveClick={(title, description) => this.handleSaveClick(page._id, title, description)}
           />
         ))}
       </div>

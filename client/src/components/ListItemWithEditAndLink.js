@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Collapse, Button, Card, CardText, CardBody, CardLink } from "reactstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FormOverlay from "./FormOverlay";
 
 class ListItem extends Component {
   constructor(props) {
@@ -31,8 +32,12 @@ class ListItem extends Component {
             </div>
             <Collapse isOpen={this.state.collapse}>
               <CardText className="list-description">{this.props.data.description}</CardText>
-              <CardLink href="#">Card Link</CardLink>
-              <CardLink href="#">Another Link</CardLink>
+              <FormOverlay
+                handleSaveClick={this.props.handleSaveClick}
+                title={this.props.data.title}
+                description={this.props.data.description}
+              />
+              {/* <Button href="#">Delete</Button> */}
             </Collapse>
           </CardBody>
         </Card>
