@@ -142,14 +142,15 @@ router.put("/pages/:pageId", passport.authenticate("jwt", config.jwtSession), (r
           .then(page => {
             if (!page) next("Error, site could not be created");
             else {
-              res.json({ success: true, page });
-              notebook._sites.push(page._id);
-              return notebook.save();
+              return Notebook.findOne({ _sites: req.params.pageId }).populate("_sites");
             }
           })
-          .then(notebook => {
-            if (!notebook) next("Error, notebook could not get saved");
-            else console.log("Notebook updated and saved");
+          .then(newNotebook => {
+            if (!newNotebook) next("Error, notebook could not get saved");
+            else {
+              res.json({ success: true, notebook: newNotebook });
+              console.log("Notebook updated and saved", newNotebook);
+            }
           })
           .catch(err => next(err));
       }
