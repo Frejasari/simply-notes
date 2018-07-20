@@ -8,10 +8,12 @@ class NotebookList extends Component {
     this.state = {
       notebooks: []
     };
-    this.handleEditClick = this.handleEditClick.bind(this);
+    this.handleSaveClick = this.handleSaveClick.bind(this);
   }
-  handleEditClick(e) {
-    console.log("HANDLE EDIT CLICK", e.target.id);
+  handleSaveClick(notebookId, title, description) {
+    api.editNotebook(notebookId, { title, description }).then(res => {
+      this.setState({ notebooks: res.notebooks });
+    });
   }
   componentDidMount() {
     api
@@ -28,9 +30,10 @@ class NotebookList extends Component {
       <div className="Notebooks">
         {this.state.notebooks.map(notebook => (
           <NotebookListItem
+            headline="Edit notebook"
             data={notebook}
             link={`/notebooks/${notebook._id}`}
-            handleEditClick={this.handleEditClick}
+            handleSaveClick={(title, description) => this.handleSaveClick(notebook._id, title, description)}
             key={notebook._id}
           />
         ))}
