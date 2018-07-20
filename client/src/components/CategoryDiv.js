@@ -8,7 +8,7 @@ class CategoryDiv extends Component {
     return (
       <div className={`${this.props.className} category-div `}>
         {this.props.categories.map((category, i) => (
-          <CategoryButton key={category._id} color={category.color} size="sm">
+          <CategoryButton key={category._id} id={category._id} isLink={true} color={category.color} size="sm">
             {category.name}
           </CategoryButton>
         ))}

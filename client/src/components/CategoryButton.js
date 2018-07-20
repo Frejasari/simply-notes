@@ -1,24 +1,51 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
-const CategoryButton = props => {
-  const selectedStyle = { backgroundColor: `${props.color}90`, borderColor: `transparent` };
-  const unselectedStyle = { borderColor: `${props.color}90` };
-  return (
-    <div className="category-pill-container" onClick={props.handleClick}>
-      <div
-        className={`category-pill category-pill-${props.size} category-pill--off`}
-        style={props.isUsed ? selectedStyle : unselectedStyle}
-      >
-        {props.children}
-      </div>
-      <div
-        className={`category-pill category-pill-${props.size} category-pill--on`}
-        style={props.isUsed ? unselectedStyle : selectedStyle}
-      >
-        {props.children}
-      </div>
-    </div>
-  );
-};
+class CategoryButton extends Component {
+  render() {
+    const selectedStyle = { backgroundColor: `${this.props.color}90`, borderColor: `transparent` };
+    const unselectedStyle = { borderColor: `${this.props.color}90` };
+    const unselectedStyleHover = { backgroundColor: `${this.props.color}40`, borderColor: `${this.props.color}90` };
+    const selectedStyleHover = { backgroundColor: `${this.props.color}70`, borderColor: `${this.props.color}90` };
+    if (this.props.isLink)
+      return (
+        <Link
+          to={`/categories/${this.props.id}/paragraphs`}
+          className="category-pill-container"
+          onClick={this.props.handleClick}
+        >
+          <div
+            className={`category-pill category-pill-${this.props.size} category-pill--off`}
+            style={this.props.isUsed ? selectedStyle : unselectedStyle}
+          >
+            {this.props.children}
+          </div>
+          <div
+            className={`category-pill category-pill-${this.props.size} category-pill--on`}
+            style={this.props.isUsed ? unselectedStyle : selectedStyle}
+          >
+            {this.props.children}
+          </div>
+        </Link>
+      );
+    else
+      return (
+        <div className="category-pill-container" onClick={this.props.handleClick}>
+          <div
+            className={`category-pill category-pill-${this.props.size} category-pill--off`}
+            style={this.props.isUsed ? selectedStyle : unselectedStyle}
+          >
+            {this.props.children}
+          </div>
+          <div
+            className={`category-pill category-pill-${this.props.size} category-pill--on`}
+            style={this.props.isUsed ? selectedStyleHover : unselectedStyleHover}
+          >
+            {this.props.children}
+          </div>
+        </div>
+      );
+  }
+}
 
 export default CategoryButton;
