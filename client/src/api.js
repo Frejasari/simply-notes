@@ -12,6 +12,13 @@ const errHandler = err => {
 export default {
   service: service,
 
+  getParagraphsFromCategory(categoryId) {
+    return service
+      .get(`/categories/${categoryId}/paragraphs`)
+      .then(res => res.data)
+      .catch(errHandler);
+  },
+
   //#region notebooks
   getNotebooks() {
     return service

@@ -1,5 +1,6 @@
 var express = require("express");
 const Category = require("../models/Category");
+const Paragraph = require("../models/Paragraph");
 const passport = require("passport");
 const config = require("../config");
 const accessQueries = require("../accessQueries");
@@ -14,6 +15,25 @@ router.get("/", passport.authenticate("jwt", config.jwtSession), (req, res, next
       else res.json(categories);
     })
     .catch(err => next(err));
+});
+//#endregion
+
+//#region GET all Paragraphs with category
+router.get("/:categoryId/paragraphs", passport.authenticate("jwt", config.jwtSession), (req, res, next) => {
+  console.log("Get all paragraphs called");
+  let currCategory = null;
+  Category.findOne({ _id: req.params.categoryId, _owner: req.user._id })
+    .then(category => {
+      if (!category) next("Error, no category or not rights");
+      else {
+        currCategory = category;
+        return Paragraph.find({ _categories: req.params.categoryId }).populate("_categories");
+      }
+    })
+    .then(paragraphs => {
+      if (!paragraphs) next("Error, no paragraphs with category found");
+      else res.json({ success: true, paragraphs, category: currCategory });
+    });
 });
 //#endregion
 

@@ -67,6 +67,8 @@ class ChoseCategoriesOverlay extends Component {
             {this.state.categories &&
               this.state.categories.map(category => (
                 <CategoryButton
+                  id={category._id}
+                  isLink={false}
                   size="lg"
                   key={category._id}
                   handleClick={_ => this.handleCategorySelection(category._id)}
