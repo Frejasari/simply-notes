@@ -99,21 +99,23 @@ class Page extends Component {
         {/* <h2>{page.title}</h2> */}
         {/* <p>{page.description}</p> */}
         <AddTopButton handleAddClick={_ => this.createNewParagraph(0)} />
-        {page._paragraphs.map((p, i) => (
-          <Paragraph
-            key={p._id}
-            paragraph={p}
-            index={i}
-            isAltPressed={this.state.isAltPressed}
-            isCurrentFocus={this.state.currentFocus === p._id}
-            createNewParagraph={_ => this.createNewParagraph(i + 1)}
-            deleteParagraph={this.deleteParagraph}
-            handleFocusGain={this.setFocus}
-            handleFocusChange={this.handleFocusChange}
-            handleAltPress={this.handleAltPress}
-            handleParagraphUpdate={this.handleParagraphUpdate}
-          />
-        ))}
+        <div className="page">
+          {page._paragraphs.map((p, i) => (
+            <Paragraph
+              key={p._id}
+              paragraph={p}
+              index={i}
+              isAltPressed={this.state.isAltPressed}
+              isCurrentFocus={this.state.currentFocus === p._id}
+              createNewParagraph={_ => this.createNewParagraph(i + 1)}
+              deleteParagraph={this.deleteParagraph}
+              handleFocusGain={this.setFocus}
+              handleFocusChange={this.handleFocusChange}
+              handleAltPress={this.handleAltPress}
+              handleParagraphUpdate={this.handleParagraphUpdate}
+            />
+          ))}
+        </div>
       </div>
     );
   }

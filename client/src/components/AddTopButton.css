@@ -17,7 +17,7 @@
 
 .add-first-btn:hover {
   border: 1px solid rgba(143, 164, 152, 0.9);
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.5);
   color: rgba(143, 164, 152, 0.9);
 }
 .message-text {

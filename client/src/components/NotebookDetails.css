@@ -2,7 +2,10 @@
   border-bottom-right-radius: 0;
 }
 .list-card.is-selected {
-  background-color: rgba(143, 164, 152, 0.5);
+  background-color: rgba(143, 164, 152, 0.9);
+}
+.list-card.is-unselected {
+  background-color: rgba(255, 255, 255, 0.85);
 }
 .list-card.is-selected .list-header a:hover {
   color: rgba(102, 112, 157, 1);
