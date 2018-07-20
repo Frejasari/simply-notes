@@ -7,10 +7,15 @@ class NotebookList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      notebooks: []
+      notebooks: [],
+      currentNotebook: null
     };
     this.handleSaveClick = this.handleSaveClick.bind(this);
     this.handleAddNotebookClick = this.handleAddNotebookClick.bind(this);
+    this.notebookSelected = this.notebookSelected.bind(this);
+  }
+  notebookSelected(notebookId) {
+    this.setState({ currentNotebook: notebookId });
   }
   handleSaveClick(notebookId, title, description) {
     api.editNotebook(notebookId, { title, description }).then(res => {
@@ -43,6 +48,8 @@ class NotebookList extends Component {
         <FormOverlayWithAddButton headline="Add a new Notebook" handleSaveClick={this.handleAddNotebookClick} />
         {this.state.notebooks.map(notebook => (
           <NotebookListItem
+            isSelected={this.state.currentNotebook === notebook._id}
+            onClick={_ => this.notebookSelected(notebook._id)}
             className=""
             headline="Edit notebook"
             data={notebook}

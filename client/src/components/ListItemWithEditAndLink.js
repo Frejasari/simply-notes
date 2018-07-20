@@ -19,11 +19,13 @@ class ListItem extends Component {
     return (
       <div className={`mb-1 ${this.props.className} row`}>
         <div className="col">
-          <Card className="list-card">
+          <Card className={`list-card ${this.props.isSelected ? "is-selected" : "is-unselected"}`}>
             <CardBody className="list-header">
               <div className="row no-gutters">
                 <div className="col">
-                  <Link to={this.props.link}>{this.props.data.title}</Link>
+                  <Link to={this.props.link} onClick={this.props.onClick}>
+                    {this.props.data.title}
+                  </Link>
                 </div>
                 <div className="col-auto d-flex align-items-center ml-1">
                   <Button className="show-info-btn" onClick={this.toggle}>

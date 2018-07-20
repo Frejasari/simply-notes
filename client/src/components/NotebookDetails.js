@@ -17,7 +17,7 @@ class NotebookDetails extends Component {
       this.setState({ notebook: res.notebook });
     });
   }
-  componentDidMount() {
+  getNotebookFromApi() {
     api
       .getNotebook(this.props.match.params.notebookId)
       .then(notebook => {
@@ -26,6 +26,13 @@ class NotebookDetails extends Component {
         });
       })
       .catch(err => console.log(err));
+  }
+  componentDidMount() {
+    this.getNotebookFromApi();
+  }
+  componentDidUpdate() {
+    if (!this.state.notebook || this.props.match.params.notebookId !== this.state.notebook._id)
+      this.getNotebookFromApi();
   }
   render() {
     if (!this.state.notebook) return <div>loading....</div>;
