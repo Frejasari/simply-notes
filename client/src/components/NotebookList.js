@@ -6,9 +6,10 @@ import FormOverlayWithAddButton from "./FormOverlayWithAddButton";
 class NotebookList extends Component {
   constructor(props) {
     super(props);
+    console.log("PARAMS", this.props.match.params);
     this.state = {
       notebooks: [],
-      currentNotebook: null
+      currentNotebook: this.props.match.params.notebookId
     };
     this.handleSaveClick = this.handleSaveClick.bind(this);
     this.handleAddNotebookClick = this.handleAddNotebookClick.bind(this);
