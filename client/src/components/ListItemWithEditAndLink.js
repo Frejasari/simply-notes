@@ -33,6 +33,7 @@ class ListItem extends Component {
             <Collapse isOpen={this.state.collapse}>
               <CardText className="list-description">{this.props.data.description}</CardText>
               <FormOverlay
+                headline={this.props.headline}
                 handleSaveClick={this.props.handleSaveClick}
                 title={this.props.data.title}
                 description={this.props.data.description}

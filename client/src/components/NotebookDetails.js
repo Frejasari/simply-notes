@@ -33,10 +33,10 @@ class NotebookDetails extends Component {
       <div className={`${this.props.className} Notebooks`}>
         {notebook._sites.map(page => (
           <PageListItem
+            headline="Edit page"
             data={page}
             link={`/notebooks/${this.state.notebook._id}/pages/${page._id}`}
             key={page._id}
-            handleEditClick={this.handleEditClick}
             handleSaveClick={(title, description) => this.handleSaveClick(page._id, title, description)}
           />
         ))}
