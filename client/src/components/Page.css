@@ -118,29 +118,6 @@
   color: white;
 }
 
-.add-first-btn {
-  padding: 0;
-  height: 1.2rem;
-  width: 40%;
-  background-color: transparent;
-  color: rgba(143, 164, 152, 0.9);
-  /* background-color: rgba(143, 164, 152, 0.7); */
-  border: 1px solid rgba(143, 164, 152, 0.9);
-  margin-bottom: 2px;
-  cursor: pointer;
-  text-align: center;
-  line-height: 50%;
-  border-radius: 0.2rem;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.add-first-btn:hover {
-  background-color: rgba(143, 164, 152, 0.9);
-  border: none;
-  color: white;
-}
-
 button:focus {
   outline: 0;
 }

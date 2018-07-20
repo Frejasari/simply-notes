@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Paragraph from "./Paragraph";
 import api from "../api";
 import "./Page.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AddTopButton from "./AddTopButton";
 
 class Page extends Component {
   constructor(props) {
@@ -98,39 +98,26 @@ class Page extends Component {
       <div className="Notebooks">
         {/* <h2>{page.title}</h2> */}
         {/* <p>{page.description}</p> */}
-        <AddButton createNewParagraph={_ => this.createNewParagraph(0)} />
+        <AddTopButton handleAddClick={_ => this.createNewParagraph(0)} />
         {page._paragraphs.map((p, i) => (
-          <div key={p._id}>
-            <Paragraph
-              paragraph={p}
-              index={i}
-              isAltPressed={this.state.isAltPressed}
-              isCurrentFocus={this.state.currentFocus === p._id}
-              createNewParagraph={_ => this.createNewParagraph(i + 1)}
-              deleteParagraph={this.deleteParagraph}
-              handleFocusGain={this.setFocus}
-              handleFocusChange={this.handleFocusChange}
-              handleAltPress={this.handleAltPress}
-              handleParagraphUpdate={this.handleParagraphUpdate}
-            />
-          </div>
+          <Paragraph
+            key={p._id}
+            paragraph={p}
+            index={i}
+            isAltPressed={this.state.isAltPressed}
+            isCurrentFocus={this.state.currentFocus === p._id}
+            createNewParagraph={_ => this.createNewParagraph(i + 1)}
+            deleteParagraph={this.deleteParagraph}
+            handleFocusGain={this.setFocus}
+            handleFocusChange={this.handleFocusChange}
+            handleAltPress={this.handleAltPress}
+            handleParagraphUpdate={this.handleParagraphUpdate}
+          />
         ))}
       </div>
     );
   }
   //#endregion
 }
-
-const AddButton = props => {
-  return (
-    <div className="row">
-      <div className="col text-right">
-        <button type="button" className="add-first-btn" onClick={props.createNewParagraph}>
-          <FontAwesomeIcon icon="plus" size="xs" />
-        </button>
-      </div>
-    </div>
-  );
-};
 
 export default Page;

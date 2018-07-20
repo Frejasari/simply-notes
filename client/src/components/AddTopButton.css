@@ -1,0 +1,26 @@
+.add-first-btn {
+  padding: 0;
+  height: 1.2rem;
+  width: 100%;
+  /* background-color: rgba(143, 164, 152, 0.7); */
+  background-color: rgba(143, 164, 152, 0.9);
+  color: white;
+  border: none;
+  margin-bottom: 4px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 50%;
+  border-radius: 0.2rem;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.add-first-btn:hover {
+  border: 1px solid rgba(143, 164, 152, 0.9);
+  background-color: transparent;
+  color: rgba(143, 164, 152, 0.9);
+}
+.message-text {
+  font-size: 1.2rem;
+  font-family: "Courier New", Courier, monospace;
+}
