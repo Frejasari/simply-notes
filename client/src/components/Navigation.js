@@ -10,49 +10,15 @@ const NavItem = props => (
   </li>
 );
 
-class NavDropdown extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isShown: false
-    };
-    this.toggleDropdown = this.toggleDropdown.bind(this);
-  }
-  toggleDropdown(event) {
-    event.preventDefault();
-    this.setState(prevState => ({ isShown: !prevState.isShown }));
-  }
-  render() {
-    const classDropownMenu = "dropdown-menu" + (this.state.isShown ? " show" : "");
-    return (
-      <li className="nav-item dropdown">
-        <Link
-          className="nav-link dropdown-toggle"
-          to="#"
-          id="navbarDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-          tabIndex="0"
-          onClick={this.toggleDropdown}
-        >
-          {this.props.name}
-        </Link>
-        <div className={classDropownMenu} aria-labelledby="navbarDropdown" onClick={this.toggleDropdown}>
-          {this.props.children}
-        </div>
-      </li>
-    );
-  }
-}
-
 class Navigation extends Component {
+  handleLogoutClick(e) {
+    api.logout();
+  }
   render() {
     return (
-      <nav className="navbar navbar-expand-sm fixed-top navbar-light bg-light">
+      <nav className="navbar navbar-expand-sm fixed-top navbar-light">
         <a className="navbar-brand" href="#">
-          Navbar
+          <img src="/images/SimplyNotesLogo.svg" width="30" height="30" alt="" />
         </a>
         <button
           className="navbar-toggler"
@@ -68,28 +34,18 @@ class Navigation extends Component {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <NavItem path="/">Home</NavItem>
-            <NavItem path="/notebooks">Notebooks</NavItem>
+            {api.isLoggedIn() && <NavItem path="/notebooks">Notebooks</NavItem>}
             {!api.isLoggedIn() && <NavItem path="/login">Login</NavItem>}
-            <NavDropdown name="Create">
-              <Link className="dropdown-item" to="/add-notebook">
-                Notebook
-              </Link>
-              <Link className="dropdown-item" to="/add-page">
-                Page
-              </Link>
-              <div className="dropdown-divider" />
-              <a className="dropdown-item" href="#">
-                Something else here
-              </a>
-            </NavDropdown>
+            {!api.isLoggedIn() && <NavItem path="/signup">Signup</NavItem>}
+
+            {api.isLoggedIn() && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/" onClick={e => this.handleLogoutClick(e)}>
+                  Logout
+                </Link>
+              </li>
+            )}
           </ul>
-          <form className="form-inline my-2 my-lg-0">
-            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">
-              Search
-            </button>
-          </form>
         </div>
       </nav>
     );

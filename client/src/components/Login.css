@@ -1,0 +1,32 @@
+.Login {
+  margin: 100px 100px;
+  width: 700px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+}
+
+.Login * {
+  font-family: "Courier New", Courier, monospace;
+  color: rgba(102, 112, 157, 1);
+}
+
+.Login button {
+  background-color: white;
+  border: 1px solid rgba(143, 164, 152, 0.9);
+  cursor: pointer;
+  border-radius: 0.4rem;
+  border-bottom-right-radius: 0;
+  outline: none;
+}
+
+.Login button:hover {
+  background-color: rgba(143, 164, 152, 0.7);
+  border-color: transparent;
+  color: white;
+}
+
+.message {
+  color: rgba(64, 73, 94, 1) !important;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
