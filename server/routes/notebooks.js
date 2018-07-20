@@ -118,7 +118,15 @@ router.post("/:notebookId/pages", passport.authenticate("jwt", config.jwtSession
             if (!page) next("Error, page could not be created");
             else {
               notebook._sites.push(page._id);
-              return notebook.save();
+              const promises = [];
+              promises.push(
+                Paragraph.create({ text: "start here" }).then(paragraph => {
+                  page._paragraphs.push(paragraph._id);
+                  page.save();
+                })
+              );
+              promises.push(notebook.save());
+              return Promise.all(promises);
             }
           })
           .then(notebook => {
