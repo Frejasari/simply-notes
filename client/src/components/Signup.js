@@ -85,7 +85,9 @@ class Signup extends Component {
                 }}
               />
             </FormGroup>
-            <Button onClick={e => this.handleClick(e)}>Signup</Button>
+            <Button type="submit" onClick={e => this.handleClick(e)}>
+              Signup
+            </Button>
             {this.state.message && <FormText className="message">{this.state.message}</FormText>}
           </Form>
         </div>
