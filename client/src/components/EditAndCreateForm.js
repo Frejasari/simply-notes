@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+import { Form, FormGroup, Label, Input } from "reactstrap";
 
 export default class EditAndCreateForm extends React.Component {
   render() {

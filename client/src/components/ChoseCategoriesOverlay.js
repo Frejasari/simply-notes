@@ -1,6 +1,5 @@
-/* eslint react/no-multi-comp: 0, react/prop-types: 0 */
 import React, { Component } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Collapse, Label, Input } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Label, Input } from "reactstrap";
 import CategoryButton from "./CategoryButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../api";
