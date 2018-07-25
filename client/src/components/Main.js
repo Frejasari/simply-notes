@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import NotebookList from "./NotebookList";
 import NotebookDetails from "./NotebookDetails";
 import Page from "./Page";
+import api from "../api";
 
 class Main extends Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class Main extends Component {
     this.state = {
       screenWidth: window.innerWidth
     };
+    !api.isLoggedIn() && this.props.history.push("/login");
     this.updateDimensions = this.updateDimensions.bind(this);
   }
 

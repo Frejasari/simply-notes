@@ -12,6 +12,7 @@ class Signup extends Component {
       password: "",
       message: null
     };
+    api.isLoggedIn() && this.props.history.push("/");
   }
 
   handleInputChange(stateFieldName, event) {

@@ -48,3 +48,12 @@ section.content {
   text-decoration: none;
   color: rgba(143, 164, 152, 0.9);
 }
+.custom-navbar a.active:hover {
+  text-decoration: none;
+  color: rgba(143, 164, 152, 0.9);
+}
+.custom-navbar a.active {
+  font-weight: 545;
+  font-size: 1.1rem;
+  color: rgb(78, 86, 121);
+}

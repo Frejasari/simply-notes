@@ -22,10 +22,10 @@ class Navigation extends Component {
         </a>
         <div>
           <ul className="">
-            {api.isLoggedIn() && <NavItem path="/notebooks">Notebooks</NavItem>}
             {!api.isLoggedIn() && <NavItem path="/login">Login</NavItem>}
             {!api.isLoggedIn() && <NavItem path="/signup">Signup</NavItem>}
 
+            {api.isLoggedIn() && <NavItem path="/notebooks">Notebooks</NavItem>}
             {api.isLoggedIn() && (
               <li className="nav-item">
                 <Link to="/" onClick={e => this.handleLogoutClick(e)}>
